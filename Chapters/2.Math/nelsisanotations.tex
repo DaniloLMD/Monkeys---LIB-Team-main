@@ -1,0 +1,98 @@
+
+
+    
+    \section{Nelsi's anotations}
+    
+        \subsection{Chicken McNugget Theorem}
+            The Chicken McNugget Theorem (or Postage Stamp Problem or Frobenius Coin Problem) states that for any two relatively prime positive integers $m,n$, the greatest integer that cannot be written in the form $am + bn$ for nonnegative integers $a, b$ is $mn-m-n$.  
+        
+            A consequence of the theorem is that there are exactly $\frac{(m - 1)(n - 1)}{2}$ positive integers which cannot be expressed in the form $am + bn$.
+        
+        \subsection{Kaplansky's Lemma} 
+            \subsubsection{Lemma 1}
+                Given a set of size $N$, how many subsets of size $K$ that do not contain consecutive elements exist?
+                
+                Basically, we will rewrite the elements of our set as $+$ and $-$. Such that between each pair of $+$, there is a $-$. Initially, we will choose $K$ plus signs. Then, we will have $x_1$ minus signs before the first plus, $x_2$ between the first and the second, and so on, up to $x_{\scriptscriptstyle K+1}$.
+                \begin{align*}
+                    x_1, x_{\scriptscriptstyle K+1} &\ge 0\\
+                    x_i > 0 \; \forall \; 2 &\le i \le K 
+                \end{align*}
+        
+                We have $N-K$ minus signs to distribute. Since $x_2$ to $x_{\scriptscriptstyle K}$ are positive integers, we will express $x_1$ and $x_{\scriptscriptstyle K+1}$ as positive integers in the form of $x'_1-1$ and $x'_{\scriptscriptstyle K+1}-1$, resulting in the equation:
+                
+                
+                $x'_1 - 1 + x_2 + x_3 + ... + x_{\scriptscriptstyle K-1} + x_{\scriptscriptstyle K} + x'_{\scriptscriptstyle K+1}-1 = N-K$
+        
+                $x'_1 + x_2 + x_3 + ... + x_{\scriptscriptstyle K-1} + x_{\scriptscriptstyle K} + x'_{\scriptscriptstyle K+1} = N - K + 2$
+        
+                
+                We know the formula for calculating how many integer solutions there are for a positive integer.
+        
+                $\binom{M-1}{P}$ Assuming $M$ is the desired answer and $P$ is the number of coefficients.
+        
+                In our problem, it takes the following form: $\binom{N-K+1}{K}$
+    
+            \subsubsection{Lemma 2}
+            Given a circle with numbers from $1$ to $N$, in how many ways can we choose $K$ numbers without selecting neighboring ones?
+
+            We can divide the problem into $2$ cases:
+
+            If N belongs to the set, we need to choose $K-1$ elements from $N-3$ options. Following the previous lemma, our answer is:
+            
+            $\binom{N-K-1}{K-1}$
+            
+            
+            If N does not belong to the set, we have to choose $K$ from $N-1$ options.Following the previous lemma, our answer is:
+            
+            $\binom{N-K}{K}$
+
+            
+            Summing up the two answers we obtained, we have:  $\binom{N-K-1}{K-1}\binom{N-K}{K}$ $=$ $\frac{N}{N-K}\binom{N-K}{K}$
+        \subsection{Divisor Analysis - CSES} 
+            \subsubsection{Number of Divisors}
+                    Each divisor of the number can be written as $\prod_{i = 1}^N x_i^{\alpha_i}$
+                    where $0 \leq \alpha_i \leq k_i$.
+                    
+                    Since there are $k_i + 1$ choices for $\alpha_i$, the number of divisors is
+                    simply $\prod_{i = 1}^N (k_i + 1)$.
+                    
+                    We can calculate this by iterating through the prime factors in $\mathcal O(N)$
+                    time.
+                    
+            \subsubsection{Sum of divisors}
+            
+                Let the sum of divisors when only considering the first $i$ prime factors be $S_i$. The answer will be $S_N$.
+                
+                $$\begin{aligned} S_i &= S_{i - 1} \sum_{j = 0}^{k_i} x_i^j\\ &= S_{i - 1} \cdot \frac{x_i^{k_i + 1} - 1}{x_i - 1}\\ \end{aligned}$$
+                
+                We can calculate each $S_i$ using fast exponentiation and modular inverses in
+            $\mathcal O(N \log(\max(k_i)))$ time.
+            
+            \subsubsection{Product of divisors}
+
+                Let the product and number of divisors when only considering the first $i$ prime
+                factors be $P_i$ and $C_i$ respectively. The answer will be $P_N$.
+                
+                $$\begin{aligned} P_i &= P_{i - 1}^{k_i + 1} \left(x_i^{k_i(k_i + 1)/2} \right)^{C_{i - 1}} \end{aligned}$$
+                
+                Again, we can calculate each $P_i$ using fast exponentiation in
+                $\mathcal O(N \log(\max(k_i)))$ time, but there's a catch! It might be tempting
+                to use $C_{i - 1}$ from your previously-calculated values in part 1 of this
+                problem, but those values will yield wrong answers.
+                
+                This is because $a^b \not \equiv a^{b \bmod p} \pmod{p}$ in general. However, by
+                Fermat's little theorem, $a^b \equiv a^{b \bmod (p - 1)} \pmod{p}$ for prime
+                $p$, so we can just store $C_i$ modulo $10^9 + 6$ to calculate $P_i$.
+
+        \subsection{Bracket Sequences II - CSES}
+            For the "Bracket Sequences II" solution, we will first calculate the factorials and perform the following checks. Initially, we will check if the bracket sequence (BS) becomes irregular at any point; if it does, we return $0$. Additionally, we will verify if our right bracket sequence (RBS) has all $N$ elements; if it does, we return $1$.
+
+            After these base case checks, we will proceed to calculate the Catalan number for this value.
+ 
+            The standard formula for the Catalan number is:
+
+            $C_n = \binom{2n}{n} - \binom{2n}{n - 1}$
+
+            This formula means that out of the $2n$ opening parentheses, we will choose $n - 1$ to close. We will make a small modification to it. We will keep track of the number of parentheses that have already been opened and closed and substitute that into the formula. 
+
+            $C_n = \frac{2n - (open + close)}{(n-open)!(n-close)!} - \frac{2n - (open + close)}{(n-open-1)!(n-close+1)!}$

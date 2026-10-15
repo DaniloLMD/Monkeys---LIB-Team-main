@@ -1,0 +1,41 @@
+
+\section{Maximizar a soma de Manhattan Distances entre pares de pontos}
+%https://codeforces.com/contest/2122/problem/C
+Dado $2N$ pontos com coordenadas inteiras, escolha $N$ pares de ponto disjuntos $a_i$ e $b_i$ a fim de maximizar $\sum_{i=1}^N|X_{a_i} - X_{b_i}| + |Y_{a_i} - Y_{b_i}|$.
+
+Podemos resolver esse problema em $\mathcal{O}(N\log(N))$, separamos cada ponto em 4 grupos de acordo com o índice do ponto se forem ordenados por $X$ e por $Y$ separadamente. Daí vamos colocar num mesmo par, os pontos que tem $X$ na metade menor e $Y$ na metade menor e os pontos que tem $X$ na metade maior e $Y$ na metade maior. E colocar num mesmo par, os pontos que tem $X$ na metade menor e $Y$ na metade maior e os pontos que tem $X$ na metade maior e $Y$ na metade menor.
+
+A melhor configuração seria sempre tentar colocar um $X$,$Y$ pequenos com $X$,$Y$ grandes. Se ordenássemos os pontos em função de $X$ colocaríamos os índices na primeira metade com os da segunda metade, mas também, ao mesmo tempo, se ordenássemos em função de $Y$, os pontos da primeira metade ficariam com os da segunda metade. Mas fazer isso é possível?
+
+Podemos classificar cada ponto em 4 grupos de acordo em qual metade cada ponto está quando ordenamos por $X$ e por $Y$.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Grupo} & \textbf{Ordenação por $X$} & \textbf{Ordenação por $Y$} \\ \hline
+    $A$ & Metade menor & Metade menor \\ \hline
+    $B$ & Metade maior & Metade maior \\ \hline
+    $C$ & Metade menor & Metade maior \\ \hline
+    $D$ & Metade maior & Metade menor \\ \hline
+    \end{tabular}
+\end{table} \\
+Vamos tentar colocar no mesmo par os caras do grupo $A$ com os caras de $B$, e colocar os caras do grupo $C$ com os caras de $D$. Mas para isso é necessário que $|A| = |B|$ e $|C| = |D|$, mas temos que:
+\[
+\begin{cases}
+    |A| + |C| = N ~~(1)\\
+    |A| + |D| = N ~~(2)\\
+    |B| + |C| = N ~~(3)\\
+    |B| + |D| = N ~~(4)
+\end{cases} \xrightarrow[\text{subtraindo}~(4)~\text{de}~(2)]{\text{subtraindo}~(2)~\text{de}~(1)}
+\begin{cases}
+    |C|-|D| = 0 ~~(1)-(2) \\
+    |A|-|B| = 0 ~~(2)-(4)
+\end{cases} \rightarrow
+\begin{cases}
+    |C| = |D| ~~(1)-(2) \\
+    |A| = |B| ~~(2)-(4)
+\end{cases}
+\]
+Assim, sempre é possível parear $A$ com $B$ e $C$ com $D$.
+
+\inputwithhash{./solutions/Problemas/ManhattanPairs.cpp}

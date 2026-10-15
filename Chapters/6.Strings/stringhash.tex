@@ -1,0 +1,15 @@
+\section{String Hash}
+Compare two strings in $O(1)$ time, with $O(N)$ time preprocessing.
+\subsection{Simple Hash}
+
+\inputwithhash{./solutions/String/StringHash.cpp}
+\subsection{Hash 2D$_{\text{ayllon}}$}
+Cuidado, a hash é dupla, pode dar TLE! As string são indexadas de 0, apenas dentro da hash que setamos para ser idexado de 1 (igual string hash normal).
+
+Problema resolvido: Dado duas matrizes de char, achar as posições das ocorrências da primeira matriz na segunda.
+\inputwithhash{./solutions/String/StringHash2Dayllon.cpp}
+
+\subsection{Hash with Updates}
+
+For this problem, the idea is that you can compare the hashes of the string and it's reversed one to discover if it is a palindrome. To do the updates, just use some data structure that allows point update and range queries. The one below uses a BIT.
+\inputwithhash{./solutions/String/Palindrome_Queries.cpp}

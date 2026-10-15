@@ -1,0 +1,7 @@
+
+    \section{Merge Sort Tree}
+
+    Very strong Data Structure to answer queries but you can't do updates. A problem of this kind is something like that "You have an array and want to answer some queries on it, these queries are: given $l,r,x$ with $l \le x \le r$, how many elements in this range are greater than $x$?"
+
+    The idea is that each node of your tree is an array of elements now, and you will maintain a sorted array in each node. To answer the query, one must do a binary search in each node of the range to find how many of the elements are greater than $x$. Time complexity of this is $\mathcal{O}(n\log^2(n))$. The same as a Seg, but just use \texttt{std merge} function, it goes like \texttt{merge(v1.begin(),v1.end(),v2.begin(),v2.end(),v.begin())}, where you will merge \texttt{v1 and v2} into \texttt{v}.
+    \inputwithhash{./solutions/DataStructures/Segtree/MergeSortTree.cpp}

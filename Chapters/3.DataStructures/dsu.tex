@@ -1,0 +1,57 @@
+\section{DSU}
+Diferentes implementações com diferentes focos.
+
+\subsection{DSU com Small to Large}
+Quando além do DSU, você tem outras informações sobre os grupos que vão ser alteradas quando você realizar a união dos grupos. $\mathcal{O}(N\log(N)\cdot T)$ tal que $T$ é o custo de realizar a união (relacionado com as informações de cada grupo).
+\inputwithhash{./solutions/DataStructures/DSU_SMOL.cpp}
+
+\subsection{Persistent DSU}
+Just a DSU such that you can ask who was my parent in time $t$.
+\inputwithhash{./solutions/DataStructures/dsu_rollback_1.cpp}
+
+
+\subsection{DSU with rollback}
+A DSU such that you can roll back last operation.
+\inputwithhash{./solutions/DataStructures/dsu_rollback_2.cpp}
+
+
+\subsection{Connected Components With Segments}
+
+Here start the crazy applications.
+
+First one, given some set of edges, answer multiples queries. For each query answer how many connected components are there, if u use the edges in range (l,r).
+
+The solution does an approach with mo and dsu with rollback. The main ideia is:
+
+First solve for those such that $(r-l+1) < \sqrt(N)$. Just brute with DSU.
+After it, lets split the solution in blocks of $l$. 
+For each block u sort the queries by r. Lets say u are in first block and every $l$ lies in range $1--\sqrt{N}$.
+The solution does the following steps:
+\begin{itemize}
+    \item Add every edge in range $\sqrt{N}+1-r$.
+    \item Add every edge in range $l-\sqrt{N}$.
+    \item get answer for this segment.
+    \item rollback the edges in range $l-\sqrt{N}$.
+    \item go to the next segment.
+\end{itemize}
+
+The first step can be slow, but for each block the amortized time will be $N$. The other steps, take $\sqrt{N}$ time.
+
+\inputwithhash{./solutions/DataStructures/ConnectedComponentsWithSegments.cpp}
+
+\subsection{Dynamic Connectivity Offline}
+
+Solve those queries:
+\begin{itemize}
+    \item add an edge $u - v$
+    \item remove an edge $u - v$
+    \item answer the number off connected components.
+\end{itemize}
+
+The main idea is to define an id to each query of type $3$ and define ranges off "activation" suppose u add an edge $u - v$ and after it u remove. This will create a range $l - r$ which represents which queries off type $3$ this edge is active.
+
+After it we will do a "segment tree" alike solution.
+
+The main idea is to keep the segments which are relevant to this part of the queries and just add the edge when it cover all the ids in this segment. after it u always roll back the edges added in this level. it is easy to see (maybe it is not) that each segment will have a complexity close to a query in a segment tree.
+
+\inputwithhash{./solutions/DataStructures/DynamicConnectivityOffline.cpp}

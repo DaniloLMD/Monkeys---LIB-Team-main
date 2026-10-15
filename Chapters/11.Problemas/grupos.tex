@@ -1,0 +1,12 @@
+
+\section{Minimizar quantidade de grupos sem elementos repetidos}
+%https://codeforces.com/problemset/problem/2022/B
+Dado $N$ elementos distintos, com o elemento $i$ aparecendo $A_i$ vezes. Queremos formar grupos de tamanho máximo $K$, tal que cada grupo não pode conter elementos repetidos e todos os elementos devem pertencer a um grupo. Qual o menor número de grupos que temos que formar?
+
+Podemos resolver esse problema em $\mathcal{O}(N)$, a solução é calcular $\max\left\{\max\{A_1,A_2,\dots,A_N\}, \left\lceil \frac{\sum A_i}{K} \right\rceil  \right\}$.
+
+Vamos chamar a menor quantidade de grupos de $qt_{min}$, $qt_{min}$ tem dois lower bounds importantes, $qt_{min} \ge \max\left\{ A_1,A_2,\dots,A_N \right\}$, pois não podemos repetir elementos em um mesmo grupo. Além disso, com certeza $qt_{min} \ge \left\lceil \frac{\sum A_i}{K} \right\rceil$, uma vez que cada grupo pode ter no máximo tamanho $K$, então temos que ter no mínimo $\left\lceil \frac{\sum A_i}{K} \right\rceil$ grupos. Então a resposta é no mínimo $\max\left\{\max\{A_1,A_2,\dots,A_N\}, \left\lceil \frac{\sum A_i}{K} \right\rceil  \right\}$. Agora basta provarmos que sempre conseguimos uma configuração com $qt_{min}$ grupos, a prova é bem simples. Podemos imaginar que cada grupo é uma linha de uma matriz, assim temos uma matriz $qt_{min} \times K$, conseguimos pra cada coluna colocar colocar todos os elementos (uma vez que $qt_{min} \ge \max\left\{ A_1,A_2,\dots,A_N \right\}$), assim é só de maneira gulosa colocar os elementos de um mesmo grupo numa mesma coluna e preencher a matriz dessa maneira.
+
+Tem um outro jeito recursivo de construir os grupos que é interessante, mas para facilitar vamos considerar que $K = 2$. Suponha que um elemento $x$ apareça tal que $2 \cdot A_x = N$, nesse caso pareamos todos os outros elementos com o $x$.  Agora suponha que para todos os elementos $2 \cdot A_x < N$, então vamos escolher aleatoriamente dois elementos e parear eles, daí $N$ vai para $N-2$ e como o dobro de todas as quantidades são menores que $N$, então vale que $2 \cdot A_x <= N-2$.
+
+\inputwithhash{./solutions/Problemas/KarSalesman.cpp}

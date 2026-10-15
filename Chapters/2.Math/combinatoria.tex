@@ -1,0 +1,31 @@
+    
+    \section{Combinatória}
+    Soluções de combinatória.
+
+    \inputwithhash{./solutions/Math/comb.cpp}
+
+    \subsection{Princípio da Inclusão-Exclusão}
+    %https://codeforces.com/blog/entry/64625
+    Dado $n$ conjuntos $X_1,X_2,\dots,X_n$, queremos contar o tamanho da união deles, o seu tamanho é: 
+    $$|X_1 \cup X_2 \cup \dots \cup X_n| = \sum_{k = 1}^{n} \left((-1)^{k-1} \cdot \sum_{s \in S_k} |s| \right)$$
+    tal que que $S_k$ é o conjunto de todas as intersecções de $k$ conjuntos. De modo geral, podemos calcular isso em $\mathcal{O}(2^n)$ (iterar por todas as intersecções de conjuntos), mas podemos fazer em $\mathcal{O}(n)$ a depender da forma como calculamos $|s|$. Além disso, podemos fazer a mesma coisa para calcular a intersecção de conjuntos usando a união deles (onde é união vira intersecção, e onde é intersecção vira união).
+
+    \subsubsection{Desarranjos}
+    O número de desarranjos de $n$ números, expresso por $!n$, é igual ao número de permutações tal que nenhum elemento aparece em sua posição original, $p_i \neq i$ para $1 \le i \le n$. Para calcular isso, podemos pensar nos eventos $E_1,E_2,\dots,E_n$, tal que $E_i$ é a quantidade de permutações tal que na $i$-ésima posição, temos que $p_i = i$. Agora o problema virou calcular $n! - \sum_{i=1}^n E_i$, mas contar isso vai dar errado, pois estamos contando eventos repetidos em $\sum_{i=1}^n E_i$. Por exemplo, no cenário em que a posição $i$ e $j$ tem $p_i = i$ e $p_j = j$, vamos contar esse cenário em $E_i$ e $E_j$, ou seja, esses conjuntos tem intersecção não nula. Então o correto seria contar $n! - \left| \bigcup_{i=1}^n E_i \right|$, esse problema vira um problema de inclusão e exclusão (calcular a união de conjuntos). Uma intersecção de $k$ conjuntos vai ter tamanho igual a
+    $$\binom{n}{k} \cdot (n-k)! = \frac{n!}{k!(n-k)!} \cdot (n-k)! = \frac{n!}{k!}$$ isso significa escolher $k$ elementos que vão estar fixos e outros elementos vão estar permutados de qualquer jeito. No fim, vamos calcular
+    $$n! - \sum_{k=1}^n \left( (-1)^{k-1} \cdot \frac{n!}{k!}\right) = n! \sum_{k=1}^n \frac{(-1)^{k-1}}{k!}$$ que pode ser feito em $\mathcal{O}(n)$.
+
+    \subsection{Números de Catalão}
+    Sequência gerada pela recorrência $ C_n = \sum_{i=0}^{n-1}C_i \cdot C_{n-1-i}$, que tem fórmula fechada $C_n = \frac{1}{n+1} \binom{2n}{n}$.
+
+    
+    Para deduzir a fórmula fechada, primeiro pense em $C_n$ como a quantidade de expressões válidas com $2n$ parênteses. Disso podemos dizer que existem $\binom{2n}{n}$ maneiras de construir uma sequência de parênteses com $n$ parênteses abrindo e $n$ fechando (não necessariamente válidas). Disso vamos descontar as expressões inválidas. Considere que uma expressão inválida, ela vai conter um primeiro ponto no prefixo em que o número de parênteses fechando excede o número de parênteses abrindo por um, considere que vamos inverter todos os parênteses desse prefixo. Depois que invertemos vamos ter uma nova expressão com o total de $n+1$ parênteses abrindo e $n-1$ fechando, disso podemos dizer que toda expressão de parênteses inválida com $n$ abrindo e $n$ fechando pode ser mapeada para uma expressão de parênteses com $n+1$ abrindo e $n-1$ fechando (o método de inverter garante a bijeção dessa função). Então vamos ter $\binom{2n}{n+1}$ expressões inválidas. Assim, vamos ter $\frac{1}{n+1} \binom{2n}{n}$ expressões válidas.
+    \[
+       \binom{2n}{n} - \binom{2n}{n+1} = \binom{2n}{n} - \frac{n}{n+1} \cdot \binom{2n}{n} = \binom{2n}{n} \cdot \left( 1 - \frac{n}{n+1} \right) = \binom{2n}{n} \cdot \frac{1}{n+1}
+    \]
+    
+    Alguns problemas clássicos envolvendo os números de catalão são:
+    \begin{itemize}
+        \item A quantidade de maneiras de criar uma expressão de $2n$ parênteses válida é igual a $C_n$.
+        \item Quantidade de árvores binárias com $n$ nós é igual a $C_n$, a quantidade de árvores binárias enraizadas é igual a $C_{n-1}$.
+    \end{itemize}

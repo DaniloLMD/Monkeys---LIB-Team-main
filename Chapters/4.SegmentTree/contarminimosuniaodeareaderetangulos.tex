@@ -1,0 +1,11 @@
+\section{Contar minimos (união de area de retangulos)}
+
+We would like a data structure that can efficiently handle two types of operations: Update index $i$ to value $v$ and report the minimum and the number of occurences of the minimum on a range $[l, r]$.
+
+We can use a normal segment tree to handle range queries, but slightly modify each node and the merge operation. Let each node be a pair of values $(\texttt{val}, \texttt{cnt})$, where $\texttt{val}$ is the minimum value and $\texttt{cnt}$ is the number occurences of the minimum value.
+
+If node $c$ has two children $a$ and $b$, then if $a.\texttt{val} < b.\texttt{val}$, then $c = a$.
+If $a.\texttt{val} > b.\texttt{val}$, then $c = b$.
+If $a.\texttt{val} = b.\texttt{val}$, then $c = \{a.\texttt{val}, a.\texttt{cnt} + b.\texttt{cnt}\}$. O problema clássico é unir a área de vários retângulos, o código faz isso.
+
+\inputwithhash{./solutions/DataStructures/Segtree/AreaofRectangles.cpp}

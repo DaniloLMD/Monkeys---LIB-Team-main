@@ -1,0 +1,31 @@
+
+\section{Built in functions}
+
+Some Built in functions in GCC(remember that if u are using ll, need to add ll at the end):
+\begin{center}
+\begin{tabular}{ c | l }
+  \_\_builtin\_popcount(x)  & Counts the quantity of one’s(set bits) in an integer.  \\ 
+ \_\_builtin\_parity(x) & Checks the Parity of a integer.\\
+ 
+ &Returns true(1) if odd parity(odd quantity of set bits)\\
+ 
+ & Returns false(0) for even parity(even quantity of set bits).  \\  
+ \_\_builtin\_clz(x) &  Counts the leading quantity of zeros of the integer.\\
+ \_\_builtin\_ctz(x) & Counts the trailing quantity of zeros of the integer.  \\ 
+ \_\_builtin\_popcountll(x)  & Counts the quantity of one’s(set bits) in an long long.  \\ 
+ \_\_builtin\_parityll(x) & Checks the Parity of a long long.\\
+ 
+ &Returns true(1) if odd parity(odd quantity of set bits)\\
+ 
+ & Returns false(0) for even parity(even quantity of set bits).  \\   
+ \_\_builtin\_clzll(x) &  Counts the leading quantity of zeros of the long long.\\
+ \_\_builtin\_ctzll(x) & Counts the trailing quantity of zeros of the long long.  \\ 
+\end{tabular}
+\end{center}
+clz can be used to find the first set bit, since u can use:
+\begin{lstlisting}
+int x;
+ll xl;
+int fsi =  31 - __builtin_clz(x);
+int fsll = 63 - __builtin_clzll(xl);
+\end{lstlisting}

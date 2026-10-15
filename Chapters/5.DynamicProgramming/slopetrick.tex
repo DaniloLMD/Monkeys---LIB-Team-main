@@ -1,0 +1,14 @@
+\section{Slope Trick}
+Slope trick is a way to represent a function. A function is slope-trickable if the function satisfies 3 conditions:
+\begin{itemize}
+    \item It's continuous;
+    \item It can be divided into multiple sections, where each section is a linear function with an integer slope;
+    \item It is a convex/concave function. In other words, the slope of each section is non-decreasing or non-increasing when scanning the function from left to right.
+\end{itemize}
+
+We store a slope-trickable function using its slope changing points (points where the slope of linear function changes by $\pm 1$, depending if it's concave or convex) and one particular function of one of its multiple sections.
+
+The most important property of slope-trickable functions is that they are \textbf{mergable}! If both $f(x)$ and $g(x)$ are slope-trickable functions, then $h(x) = f(x) + g(x)$ is also slope-trickable (\textbf{Is important to know that we only consider addition of the same type of slope-trickable function, i.e both convex or concave functions}). And the slope trick representation of $h(x)$ is easily made, the leftmost function of $h$ is the sum of the leftmost functions of $f$ and $g$ and the multiset of slope points of $h$ is $S_h = S_f \cup S_g$.
+
+Example: You have a rooted tree with weighted edges and you want to every path from the root to a leaf to have same weight. You can change the weight of every edge and the cost is equal to the absolute difference of the old weight and new weight. What is the minimum cost to make every path have the same weight?
+\inputwithhash{./solutions/DP/Fireworks.cpp}

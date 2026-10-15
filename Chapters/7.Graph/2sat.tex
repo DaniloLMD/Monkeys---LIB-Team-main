@@ -1,0 +1,12 @@
+    \section{2-SAT}
+    Vamos ter uma série de proposições na forma normal conjuntiva (and de or's) e queremos ver se existe uma forma de atribuir valores as proposições (verdadeiro e falso) que torne as restrições verdadeiras. Para fazer isso transformamos os or's em condicionais e consideramos um grafo tal que as proposições são vértices e as condicionais arestas.
+    \begin{itemize}
+        \item $ a \land b = (a \lor a) \land (b \lor b)$
+        \item $ \neg a = \neg a \lor \neg a$
+        \item $ a = a \lor a$
+        \item $ a \oplus b = (a \lor b) \land (\neg a \lor \neg b)$
+        \item $ \neg (a \oplus b) = (\neg a \lor b) \land (\neg b \lor a)$
+        \item $ a \rightarrow b \equiv \neg a \lor b$
+    \end{itemize}
+    
+    \inputwithhash{./solutions/Graph/2SAT.cpp}

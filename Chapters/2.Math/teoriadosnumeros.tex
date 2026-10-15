@@ -1,0 +1,211 @@
+    \section{Teoria dos Números}
+
+    \subsection{Base e CRT}
+
+    \inputwithhash{./solutions/Math/num_theory.cpp}
+
+    \subsection{Diophantine}
+    You have a equation $a \cdot x + b \cdot y = c$, you want to find values for $x$ and $y$ that satisfies it. The necessary and sufficient condition to the existence of a solution is that $c$ is a multiple of
+$\gcd(a,b)$. Another situation is when you have $a \cdot x + b\cdot y = c \pmod{m}$, in this case, $c$ must be a multiple of $\gcd(a,b,m)$. 
+
+    The problem narrows down to solving (where $g$ is the $\gcd$ of $a$ and $b$), so we can claim that, if there is a solution, there is a solution with $x < b$, similarly, there is a solution with $y < a$.
+    \begin{cases}
+        x \equiv (c/g)(a/g)^{-1}\pmod{b/g},\\
+        y = \frac{c-ax}{b}.
+    \end{cases}
+    
+    \subsection{Discrete Log}
+
+    You have an modular equation with $a,b,x \in \mathbb{Z}$, you want to find a value for $x$ in $a^x \equiv b \;(\bmod\; m)$
+
+    If you only want to find a solution, you just have to consider values between $[0,m-1]$ because, by the Pigeonhole Principle, $a^0,a^1,\dots,a^m$ you can only have m possible values, so minimally $a^m$ it's going to be a value that already appeared and it's going to cycle. So you have to consider values between $[0,m-1]$.
+
+    However, the values of $m$ can be big, $10^9$, there's a way to solve it in $\sqrt{m}$ using the Baby-step Giant-step.
+
+    Let's consider that $gcd(a,m) = 1$ and rewrite the expression (remember you can write every integer with $x = q*p + r$, where $0 \leq r < p$, and with that you can also write $x = (q+1)*p -r$, where $0 \leq r < p$):
+
+    $$
+    a^x \equiv b \mod{m} 
+    $$
+    $$
+    a^{q*p-r} \equiv b \mod{m}
+    $$
+    $$
+    a^{q*p}*a^{-r} \equiv b \mod{m}
+    $$
+    $$
+    a^{q*p} \equiv b*a^r \mod{m}
+    $$
+
+    If you determine a good value for $p$, you can decrease the range of possible values of both $q$ and $r$, let $p = \sqrt{m}$, then $0 \leq p \leq \sqrt{m}+1$ (the plus 1 comes from the minus from the $r$) and $0 \leq r < \sqrt{m}$, so you can precalculate the values of $a^{q*p}$ for all $0 \leq p \leq \sqrt{m}$ and $b*a^{r}$ for all $0 \leq r < \sqrt{m}$, so in the end you have $O(\sqrt{m})$. And to find values of $q$ and $r$, you go through the values of $a^{q*p}$ and use binary search or two pointers to find which values $a^{q*p}$ and $b*a^r$ are equal.
+
+    If $gcd(a,m) \neq 1$, then you can't calculate the inverse of $a^r$, however you can still try to solve it, let $g = gcd(a,m)$, if $g \nmid b$ then the equation doesn't have solution (if $g \mid a$ and $g \mid m$, then certainly, by linear combination, $g \mid b$). If $g \mid b$, then you can divide everyone by $g$. And do it until $gcd(a,m) \neq 1$. But after every time you do this operation you eliminate one $a$ from $a^x$.
+
+    $$a^x \equiv b \mod{m}$$
+    $$a^{x-1}*a \equiv b \mod{m}$$
+    $$a^{x-1}*\frac{a}{g} \equiv \frac{b}{g} \mod{\frac{m}{g}}$$
+    
+    $$\dots$$
+    
+    $$a^{x-add}*\frac{a^{add}}{k} \equiv \frac{b}{k} \mod{\frac{m}{k}}$$
+
+    After applying the operation $add$ times you have to solve the problem with new values where $gcd(a,\frac{m}{k}) \neq 1$. $\mathcal{O}(\sqrt{m})$ where $m$ is the mod.
+
+    \inputwithhash{./solutions/Math/discrete_log.cpp}    
+
+    \subsection{GCD Array Trick}
+    Way to store all gcds in a array range . For each $i$ you store every different gcd sub-segment that exists starting at $i$.
+    
+    In this problem you need to find a $Max(gcd(A[l],\cdots,A[r])*(r-l+1))$. There is at most $\log_2(\max(A))$ distinct $\gcd$ values. 
+    \inputwithhash{./solutions/Math/gcdrobado.cpp}
+    
+        
+
+    \subsection{High Level Integer Fatorization}
+    We can use this algorithms to find factors of greaters numbers.
+    \subsubsection{Miller Rabin}
+
+    Using the first 12 primes we can test if any number $\le 2^{64}$ is prime is $O(ln \textit{ n} )^2$
+    
+    \inputwithhash{./solutions/Math/miller.cpp}  
+
+    The Polard Rho algoritms returns a non-trivial factor of a number. We can add this with the miller-Rabin to decompose the number testing this factor is a prime number.
+    
+    \subsubsection{Polard Rho}
+    \inputwithhash{./solutions/Math/rho.cpp} 
+
+    \subsection{Lucas Theorem}
+
+    Given $n, k$ and $m$, find $\binom{n}{k}$ mod $m$, where $(n, k \le 10^{9})$, $m$ is a square-free number less than or equal to $10^{9}$ and each prime that appears on $m$ is less than $50$. A Square-Free number is a number that, in his prime factorization, each prime appears exactly once.
+
+    \inputwithhash{./solutions/Math/Lucas.cpp}
+    
+
+    \subsection{Multiplicative Functions}
+   In number theory, a multiplicative function is an arithmetic function $f(n)$ of a positive integer $n$ with the property that $f(1) = 1$ and
+
+$$\displaystyle f(ab)=f(a)f(b)$$
+
+whenever a and b are coprime.
+
+    Examples of multiplicative functions:
+    \begin{itemize}
+        \item $gcd(n,k)$: the greatest common divisor of n and k, as a function of n, where k is a fixed integer.
+\item {$\displaystyle \varphi (n)$}: Euler's totient function 
+{$\displaystyle \varphi$ }, counting the positive integers coprime to (but not bigger than) $n$
+\item $\mu (n)$: the Mobius function, the parity (-1 for odd, +1 for even) of the number of prime factors of square-free numbers; 0 if n is not square-free
+\item $\sigma k(n)$: the divisor function, which is the sum of the k-th powers of all the positive divisors of n (where k may be any complex number). Special cases we have
+\begin{itemize}
+    \item $\sigma 0(n) = d(n)$ the number of positive divisors of n,
+    \item $\sigma 1(n) = \sigma (n)$, the sum of all the positive divisors of n.
+\end{itemize}
+    \end{itemize}
+
+    The main ideia of multiplicative functions is to use the linear sieve or just the sieve to calculate them. Normaly it will lead to some principle and u will need to calculate the solution to powers of primes and products of coprimes.
+    for example we have for $\phi(x)$ that:
+    \begin{itemize}
+        \item $\phi(p) = p-1$,
+        \item $\phi(p^k) = p^k -p^{k-1}$,
+        \item $\phi(a*b) = \phi(a) * \phi(b)$, if $a$ and $b$ are coprime,
+        \item $\phi(a*b) = \phi(a) * \phi(b) * \frac{gcd(a,b)}{\phi(gcd(a,b))}$, if $a$ and $b$ arent coprime,
+    \end{itemize}
+
+    Then we can calculate phi using sieve using the following code:
+
+    \inputwithhash{./solutions/Math/phi.cpp}
+
+    mantaining the quantity of the smallest prime can be useful to some functions, such as $f(p^k) = k$.
+
+    \inputwithhash{./solutions/Math/fpk.cpp}
+    \subsubsection{Mobius Inversion}
+
+    The Mobius function which is in the list above have a really interesting property:
+
+    lets define a function f as:
+
+    $$
+        f(x) = 
+      \begin{cases}
+        1, & \text{for } x = 1 \\
+        0, & \text{otherwise.} 
+      \end{cases}
+    $$
+    
+    we have an interesting property which can be used to solve alot of multiplicative function related problems.
+
+    $$
+        f(x)  = \sum_{d|x}\mu(d)
+    $$
+
+    And $\mu(d)$ is calculated like:
+
+    $$
+        \mu(d) = 
+    \begin{cases}
+        1, & \text{for } d = 1 \\
+        0, & \text{if n is not square free} \\
+        (-1)^r & \text{for r distinct primes in d.}
+    \end{cases}
+    $$
+
+    \inputwithhash{./solutions/Math/mobius.cpp}
+
+    So lets say we need to calculate the following:
+    \begin{align*}
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} [gcd(i,j) = 1] \\
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} \sum_{d|gcd(i,j)}\mu(d) \\
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} \sum_{d = 1}^{n} [d|gcd(i,j)]*\mu(d) \\
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} \sum_{d = 1}^{n} [d|i]*[d|j]*\mu(d) \\
+       \sum_{d = 1}^{n}& \mu(d) * (\sum_{i=1}^{n}[d|i]) * (\sum_{j=1}^{n}[d|j]) \\
+       \sum_{d = 1}^{n}& \mu(d) * (\left\lfloor \frac{n}{d} \right\rfloor) * (\left\lfloor \frac{n}{d} \right\rfloor) 
+    \end{align*}
+
+    So we started with a $O(N^2 * log(N))$ solution went to a $O(N^3 * log(N))$ solution, 
+    but with the power of magic(known as math in some places) we ended with a $O(N)$ solution.
+
+    Some other possible problems using this:
+    
+    \begin{align*}
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} gcd(i,j) \\
+        \sum_{k=1}^{n}& \sum_{i=1}^{n} \sum_{j=1}^{n} [gcd(i,j) = k] \\
+        \sum_{k=1}^{n}& k * \sum_{a=1}^{\left\lfloor \frac{n}{k} \right\rfloor} 
+        \sum_{b=1}^{\left\lfloor \frac{n}{k} \right\rfloor} [gcd(a,b) = 1] \\
+        \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * (\left\lfloor \frac{n}{d*k} \right\rfloor) * (\left\lfloor \frac{n}{d*k} \right\rfloor) 
+    \end{align*}
+
+    Next:
+
+    \begin{align*}
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} lcm(i,j) \\
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} \frac{i*j}{gcd(i,j)} \\
+        \sum_{k=1}^{n}& \sum_{i=1}^{n} \sum_{j=1}^{n} [gcd(i,j) = k]*\frac{i*j}{k} \\
+        \sum_{k=1}^{n}& k * \sum_{a=1}^{\left\lfloor \frac{n}{k} \right\rfloor} 
+        \sum_{b=1}^{\left\lfloor \frac{n}{k} \right\rfloor} [gcd(a,b) = 1]*a*b \\
+        \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * (\sum_{a=1}^{\left\lfloor \frac{n}{k} \right\rfloor}[d|a]*a) * ( 
+        \sum_{b=1}^{\left\lfloor \frac{n}{k} \right\rfloor} [d|b]*b) \\
+        a =& d*p\text{, }b = d*q\\
+        \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * (\sum_{p=1}^{\left\lfloor \frac{n}{k*d} \right\rfloor}d*p) * ( 
+        \sum_{q=1}^{\left\lfloor \frac{n}{k*d} \right\rfloor} d*q) \\
+       \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * d^2 * (\sum_{p=1}^{\left\lfloor \frac{n}{k*d} \right\rfloor}p) * ( 
+        \sum_{q=1}^{\left\lfloor \frac{n}{k*d} \right\rfloor} q) \\
+        \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * d^2 * (\sum_{p=1}^{\left\lfloor \frac{n}{k*d} \right\rfloor}p) * ( 
+        \sum_{q=1}^{\left\lfloor \frac{n}{k*d} \right\rfloor} q) \\
+        \text{the}&\text{ left part can be done with an PA, which will denoted as } PA(l,r)\\
+        \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * d^2 * (PA(1,\left\lfloor \frac{n}{k*d} \right\rfloor)^2)  \\
+        \text{let }& l = k*d\\
+         \sum_{k=1}^{n}& k * \sum_{d = 1}^{\left\lfloor \frac{n}{k} \right\rfloor} \mu(d) * d^2 * (PA(1,\left\lfloor \frac{n}{l} \right\rfloor)^2)  \\
+         \sum_{l=1}^{n}& (PA(1,\left\lfloor \frac{n}{l} \right\rfloor)^2) * \sum_{d'|l} \mu(d') * d' * l   \\
+    \end{align*}
+
+    Now lets analyze a problem with an vector $A$ with max element being $M$ and we need to calculate:
+
+
+    \begin{align*}
+        \sum_{i=1}^{n}& \sum_{j=1}^{n} lcm(A[i],A[j]) \\
+        \sum_{d=1}^{M}& \sum_{(a \in A \And d|a)} \sum_{(b \in A \And d|b)} [gcd(\frac{a}{d},\frac{b}{d}) = 1] * \frac{a*b}{d} \\
+        \sum_{d=1}^{M}& \sum_{(a \in A \And d|a)} \sum_{(b \in A \And d|b)} \sum_{l=1}^{M} \mu(l) * [l|\frac{a}{d}][l|\frac{b}{d}] * \frac{a*b}{d} \\
+        \sum_{d=1}^{M}& \frac{1}{d} * \sum_{l=1}^{M} \mu(l) * ( \sum_{a \in A} \sum_{b \in A} [dl|a][dl|b] * a*b) \\
+        \text{let }& t = dl\\
+        \sum_{t=1}^{M}& \frac{1}{d} * \sum_{l|t} \frac{l}{t} * \mu(l) * ( \sum_{a \in A} \sum_{b \in A} [t|a][t|b] * a*b) \\
+        \sum_{t=1}^{M}&(\sum_{l|t} \frac{l}{t} * \mu(l)) * ( \sum_{a \in A \And t|a} a)^2 
+    \end{align*}

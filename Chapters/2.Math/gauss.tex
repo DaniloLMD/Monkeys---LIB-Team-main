@@ -1,0 +1,146 @@
+    \section{Gauss}
+
+    \subsection{Simple Gauss}
+
+    Used to solve system of linear algebraic equations (SLAE), determine if the SLAE has no solution, one or an infinite number of solutions. If we have a SLAE:
+    
+    \[
+        \begin{matrix}
+            a_{1,1}x_1 &+& a_{1,2}x_2 &+& \dots &+& a_{1,m}x_m &=& b_1 \\
+            a_{1,1}x_1 &+& a_{1,2}x_2 &+& \dots &+& a_{1,m}x_m &=& b_2 \\
+            \vdots     &+& \vdots     &+& \vdots&+& \vdots     &=& \vdots \\
+            a_{n,1}x_1 &+& a_{n,2}x_2 &+& \dots &+& a_{n,m}x_m &=& b_n
+        \end{matrix}
+        \\  
+    \]
+    
+    We can see it as matrices:
+    
+    \[
+        A_{n,m} = \begin{bmatrix} 
+            a_{1,1} & a_{1,2} & \dots & a_{1,m} \\
+            a_{2,1} & a_{2,2} & \dots & a_{2,m} \\
+            \vdots  & \vdots  &  \vdots& \vdots \\
+            a_{n,1} & a_{n,2} & \dots & a_{n,m} 
+        \end{bmatrix}
+        \quad
+        X_{m,1} = \begin{bmatrix} 
+            x_{1,1} \\
+            x_{2,1} \\
+            \vdots  \\
+            x_{m,1}  
+        \end{bmatrix} 
+        \quad
+        B_{n,1} = \begin{bmatrix} 
+            b_{1,1} \\
+            b_{2,1} \\
+            \vdots  \\
+            b_{n,1}  
+        \end{bmatrix} 
+    \]
+
+    Then the SLAE can be seen as $A_{n,m} \cdot X_{m,1} = B_{n,1}$, and we can solve it using Gauss-Jordan Elimination to remove linearly dependent equations (vectors) from the system. In the end, the number of non-zero equations is equal to the number of independent equations (vectors) of the system. We call this number the rank $r$ of the matrix, and $m-R$ is called the free parameter and refers to the number of free variables.
+
+    Suppose we have an SLAE with rank $r$, let say that the free variables
+    are $x_{m-r+1},x_{m-r+2},\dots,x_{m}$ and the other are $x_1,x_2,\dots,x_{m-r}$, every non-free variable is a linear combination of the free variables and a constant term.
+
+    \[
+    \begin{matrix}
+        x_1 &=&  b'_1  &+& a'_{1,m-r+1}x_{m-r+1} &+& \dots &+& a'_{m}x_m \\
+     \vdots &=& \vdots&+& \vdots &+& \vdots &+& \vdots \\
+     x_{m-r}&=& b'_{m-r}&+& a'_{m-r,m-r+1}x_{m-r+1} &+& \dots &+& a'_mx_m \\
+     x_{m-r+1} &=& s_{m-r+1} \\
+     \vdots &=& \vdots \\
+     x_m &=& s_m
+    \end{matrix}
+    \]
+
+    $s_{m-r+1},\dots,s_m$ are any values from $\mathbb{R}$, we can write the set of solutions with vectors, and it forms a vectorial solution space.
+
+    \[
+        \begin{bmatrix}
+            x_1 \\
+            x_2 \\
+            \vdots \\
+            x_m
+        \end{bmatrix}_{m,1}
+         = \quad 
+         \begin{bmatrix}
+            b'_1 \\
+            b'_2 \\
+            \vdots \\
+            b'_{m-r} \\
+            0 \\
+            0 \\
+            \vdots \\
+            0
+        \end{bmatrix} _{m,1}
+        + \quad
+        s_{m-r+1}
+        \begin{bmatrix}
+            a'_{1,m-r+1} \\
+            a'_{2,m-r+1} \\
+            \vdots \\
+            a'_{m-r,m-r+1} \\
+            1 \\
+            0 \\
+            \vdots \\
+            0
+        \end{bmatrix}_{m,1}
+        + \quad
+        s_{m-r+2}
+        \begin{bmatrix}
+            a'_{1,m-r+2} \\
+            a'_{2,m-r+2} \\
+            \vdots \\
+            a'_{m-r,m-r+2} \\
+            0 \\
+            1 \\
+            \vdots \\
+            0
+        \end{bmatrix}_{m,1}
+        + \dots + \quad
+        s_{m}
+        \begin{bmatrix}
+            a'_{1,m} \\
+            a'_{2,m} \\
+            \vdots \\
+            a'_{m-r,m} \\
+            0 \\
+            0 \\
+            \vdots \\
+            1
+        \end{bmatrix}_{m,1}
+    \]
+
+    The first vector after the $=$ is one possible solutions, the other vectors compose a vectorial space of dimension $m-r$. This is the rank of the solution. We can say that $B_{n,1}$ is a linear combination of the columns of $A_{n,m}$.
+
+    For each equation we search for a leading variable, a variable that isn't zero, after we find the "bigger one", we put it in the diagonal (change equations order and variables order). Then we update the values of the other coefficients (in the faster way, we don't need to update all the values of the matrix to make the column be zero). Then, we get the value for each variable.
+
+    Lib description: Solves $A_{n,m} * X_{m,1} = B_{n,1}$, with $n$ being the number of equations and $m$ the number of variables. If there are multiple solutions, an arbitrary one is returned. Returns the solution alongside the vectors that generates all solutions. Time: $\mathcal{O}(n^2 m)$. The sizes of every vector must be correct.
+    \inputwithhash{./solutions/Math/gauss.cpp}
+
+    \subsection{Modular 2 (bitset)}
+    Problem:
+    
+    a grid of switchs and each press in a switch i,j swaps the state of himself and the ones which are adjacent to it.
+    
+    If there is a way to make all on, print the switchs pressed.
+
+    The $A$ matrix is equivalent to the augmented matrix $A|B$.
+    \inputwithhash{./solutions/Math/gaussmod2.cpp}
+    
+    \subsection{Matrix rank}
+    The rank of a matrix is the largest number of linearly independent rows/columns of the matrix. The rank is not only defined for square matrices.
+    We can see that the other variables are "free", so can be uses to combinatorial problems.
+    
+    Example:
+    
+    Given a set of n integers, how many subsets have xor not equal to 0?
+    \inputwithhash{./solutions/Math/subset-nim.cpp}
+
+    \subsection{Xor Basis}
+
+    Useful for bit problems of the type: "I have some numbers and I want to count how many distincts subset xor's exist". To do it we consider the vectorial space $\mathbb{Z}^d_2$ (vectors with $d$ positions and taken modulo 2). Each vector represents a number, the positions of the vector represents the bits of the number and the modulo 2 sum has the same behavior of xor operation, so we can treat the numbers as vectors of this space. Now the problem reduces to find how many vectors are linearly independent and the number of distincts xor's will be $2^{|B|}$ where $B$ is the set of independent vectors. We will store only the independent vectors, and there will be a maximum number of $d$ of them. For every vector $v$ that we try to insert in the basis, we iterate over the existing vectors of the base and use them to remove the bits of $v$. Each vector has an distinct higher/lower bit. Insert elements and check if an element can be made in $\mathcal{O}(d)$ such that $d$ is the number of bits.
+
+    \inputwithhash{./solutions/Math/xorbasis.cpp}

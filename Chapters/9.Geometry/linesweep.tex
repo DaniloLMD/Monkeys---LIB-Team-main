@@ -1,0 +1,61 @@
+        
+    \section{Line Sweep}
+        \subsection{Points Inside Triangles}
+        Given $n$ triangles with vertices {($x_i$, $y_i$), ($x_i + d$, $y_i$), ($x_i$, $y_i + d$)}, and $q$ points, compute for each triangle, the number of points that lie inside or in boundary of him. $O(nlogn)$. (Original Problem: CODECHEF - TRIANGULAR QUERIES)
+        \inputwithhash{./solutions/Geometry/PointsInsideTriangles.cpp}
+        \newpage
+        \subsection{Ranking Problem}
+        Given $n$ students that attended to $3$ contests, and all of them have different ranks, between $1$ and $n$ inclusive, for each contest. We say that one student $a$ is better that student $b$, if all ranks of student $a$ in each contest is lesser that student $b$. A student is said to be excellent if no other student is better than him. How many excelent students there exists ?
+        
+        This solutions runs in $O(nlogn)$. (Original Problem: SPOJ: NICEDAY)
+        
+        \inputwithhash{./solutions/Geometry/RankingProblem.cpp}
+        \newpage
+        \subsection{Balls Falls and Segments}
+        Given $n$ segments (non horizontal and with no common points), and $m$ balls in a 2D plane, say for each ball the x point which he falls. (This solution was upload, the source code is just for only one ball, but the overall complexity is still $O(nlogn)$ if the number of balls is $O(n)$).
+        
+        This solutions runs in $O(nlogn)$. Original Problem (NCPC 2013 - H).
+        
+        \inputwithhash{./solutions/Geometry/WaterFalls.cpp}
+        \newpage
+        \subsection{Checking Points Inside Convex Polygon}
+            % \subsubsection{Offline}
+            % Given $n$ points in 2D plane, and a Convex Polygon, check for each of these $n$ points, if them are strict inside or not of polygon.
+            
+            % This solutions runs in $O(nlogn)$ but i used Fracion Class to Take Care with double error precisions, so the overall solution in this case is $O(nlogn^2)$.
+            
+            % \lstinputlisting{./solutions/Geometry/PointsInsideConvexPolygon.cpp}
+            % \newpage
+            \subsubsection{Online}
+            Given one point and a Convex Polygon, with vertices in counter clockwise order, check if this point is inside or in boundary of him.
+            
+            This solutions runs in $O(logn)$.
+            
+            \inputwithhash{./solutions/Geometry/PointsInsideConvexPolygonOn.cpp}
+        % \newpage
+        % \subsection{Area of Rectangles Union}
+        % Given a set of N axis aligned rectangles, you need to find the area of their union. Each rectangle is represented by two points, one lower-left point and one upper-right point. The coordinates are all integers.
+        
+        % This solutions runs in $O(nlogn)$. Original Problem (HackerEarth - Line Sweep Tutorial, Sample Exercicise)
+        
+        % \lstinputlisting{./solutions/Geometry/RectangleUnion.cpp}
+        % \newpage
+        \subsection{Radial Sweep}
+        You are given $N$ red points and $M$ blue points on a 2D plane.
+
+        You are required to delete the minimum number of points(the deleted points can be of both colors) so that it's possible to draw a line such that all remaining red points are on one side of the line while all remaining blue points are on the other side of the line.
+        
+        This solutions runs in $O(n^2logn)$. Original Problem (Codechef, REDBLUE - DEC17)
+        
+        \inputwithhash{./solutions/Geometry/RadialSweep.cpp}
+        \subsection{Radial Sweep sem Double}
+        You are in a point inside a square NxN. There are some rocks(polygons) inside the square, u need to discover how many points form the perimeter of the square, are visible, form your oirigin
+    
+        In this problem, there are three types of events: when our ray hits a fence point, enters a rock, or exits a rock.
+
+    The second and third types of events can be found for each rock by sorting the rays to its vertices by bearing and then taking the two endpoints of the sorted list. These two rays are the two tangents to the rock.
+    
+    We can then perform a radial sweep to find the fence posts that Farmer Don can see - these fence posts are simply the ones where the number of type-2 and type-3 events we've processed so far are equal.
+        
+        \inputwithhash{./solutions/Geometry/SeeingTheBoundary.cpp}
+    % \newpage

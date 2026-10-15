@@ -1,0 +1,29 @@
+\section{Permutation Tricks}
+
+\subsection{Trick 1}
+
+The main ideia is that $dp(N)$ stores a permutation of $N$ elements, when considering $dp(N+1)$ we 
+think of it as putting a new element with value equal to $X$ in the end, then all the elements greater 
+than or equal to $X$ will be $+1$, the ones that are lower don't change. This guarantee that the final 
+vector is also a permutation independently of the value of $X$.
+
+Example: Your task is to count the number of permutations of $1,2, \ldots ,n$ that have exactly $k$ inversions. Consider $dp(i,j) =$ permutations with $i$ elements and $j$ inversions. Then $dp(i,j) =  \sum_{x = 1}^{i} dp(i-1,j-(i-k))$. In this problem you need to do some optmizations with preffix sum.
+\inputwithhash{./solutions/DP/PermutationInversions.cpp}
+
+\subsection{Trick 2}
+
+The main idea is to think to build the permutation starting from an empty vector, the process of building consists in putting the elements in an order. In some step of the process you will have a permutation of $N$ element, the next value ($N+1$) can be inserted in one of the $N+1$ possible positions.
+
+Example: You are given an integer sequence $A = (A_1,\dots,A_N)$ of length $N$. Find the number of permutations $P = (P_1,\dots,P_N)$ of $(1,2,\dots,N)$ such that there exist exactly $K$ integers $i$ between $1$ and $(N-1)$ (inclusive) such that $A_{P_i} < A_{P_{i+1}}$.
+\inputwithhash{./solutions/DP/IncreasingKTimes.cpp}
+
+\subsection{Trick 3}
+
+Think of a permutation as points in a 2D plane, the value $P[i]$ is a point with coordinate $(i,P[i])$. It's useful for problems involving LIS and LDS (Longest Increasing/Deacreasing Subsequence).
+
+\subsection{Trick 4}
+
+Kinda similar to Trick 1, $dp(N)$ stores a permutation of $N$ elements, when considering $dp(N+1)$ we initially think of $N+1$ taking the last position then we swap it (or not) with other element.
+
+Example: Given an $n$, count for each $1 \leq x \leq n$ how many permutations of size $n$ exists that have exaclty $x$ positions where $p[i] \geq i$.
+\inputwithhash{./solutions/DP/Kaos.cpp}

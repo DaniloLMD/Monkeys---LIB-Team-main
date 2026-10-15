@@ -1,0 +1,33 @@
+\section{SOS DP}
+Sum over subsets (SOS) DP is a trick that allows you to efficiently compute the sum of all the subsets of an array.
+
+The naive solution would be to iterate through every pair of masks and check if one of them is a subset of the other. We can speed this up if we iterate over only subsets of the current mask and add up all of the those values to get the sum over subsets for a particular mask ($\mathcal{O}(3^n)$).
+
+The difference comes from the fact that in the first example we iterate over every pair of subsets which takes $(2^n)^2$ time and the second we iterate directly over the subsets for each mask. This means each mask is only visited by $2^{n - k}$ other masks where k is the number of elements of the mask.
+
+This means that the total time complexity is O($\sum_{0}^{n} {n \choose k} \cdot 2^{n - k} = 3^n$).
+
+Notice how in both of these examples we don't seem to be saving much information between different subsets which is the essence of DP.
+Define $\texttt{SOS}(\texttt{mask}, x)$ to be the sum of subsets of mask such that the first $x$ bits of the subset are identical to the first $x$ bits of mask.
+For example, $\texttt{SOS}(1001001, 3)$ includes the subsets $1001001$, $1000001$, $1001000$, $1000000$ which all have the same common prefix of $100$.
+
+\[
+\texttt{SOS}(mask, x) = \begin{cases}
+    \texttt{SOS}(\texttt{mask}, x - 1) + \texttt{SOS}(\texttt{mask} - 2^i, x - 1)  \quad \textrm{if } |2^i \wedge \texttt{mask}| > 0 \\
+
+    \texttt{SOS}(\texttt{mask}, x - 1) \quad \textrm{otherwise}  
+\end{cases}
+\]
+
+
+One example is: given a list of $n$ integers, your task is to calculate for each element $x$:
+
+\begin{itemize}
+    \item The number of elements $y$ such that $x~|~y=x$, can be seen as $y \subseteq x$.
+    \item the number of elements $y$ such that $x~\&~y=x$, that is equal to $(!x)~|~(!y)=~!x$, can be seen as $(!y) \subseteq (!x)$.
+    \item the number of elements $y$ such that $x~\&~y\neq0$, that is the complement of to $(!x)~|~y=~(!x)$, can be seen as $y \subseteq (!x)$.
+\end{itemize}
+
+The solution of the problem is in $\mathcal{O}(X\cdot \log(X))$, where $X$ is the greatest element.
+
+\inputwithhash{./solutions/DP/BitProblem.cpp}

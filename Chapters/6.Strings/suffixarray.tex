@@ -1,0 +1,8 @@
+\section{Suffix Array}
+The key idea is to make a substring problem, into a prefix problem. Remember to change the '\#' or '\$' at the end of the string used in SA and LCP. Remember that $\displaystyle lcp(i,j) = \min_{k=i}^{j-1} \{lcp[k]\}$.
+\inputwithhash{./solutions/String/SA.cpp}
+
+In Bruno Monte lib, there is a $\mathcal{O}(N)$ suffix array and one that is dynamic.
+
+% This one is OP, I don't know how it works but it's from Bruno Monte, so works. Suffix Array in $\mathcal{O}(N)$ XD.
+% \inputwithhash{./solutions/String/SAQ.cpp}

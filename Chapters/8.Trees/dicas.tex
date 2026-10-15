@@ -1,0 +1,8 @@
+    \section{Dicas}
+    \begin{itemize}
+    \item A menor quantidade de arestas que você precisa adicionar em uma árvore para que não exista mais pontes é $\left \lceil \frac{qtd(folhas)}{2} \right \rceil$. Roda o DFS a partir de um cara que não é folha, ordena as folhas pelo tempo de entrada e cria uma aresta entre a folha $i$ e a folha $i + \frac{qtd}{2}$. Suponha que exista uma aresta que ainda é ponte, temos dois casos se considerarmos as folhas abaixo dessa aresta:
+        \begin{itemize}
+        \item Tem menos que $\frac{qtd}{2}$ folhas, assim com certeza uma dessas folhas vai ter uma aresta com uma folha de fora dessa "subárvore";
+        \item Tem mais que $\frac{qtd}{2}$ folhas, com certeza essas folhas pertencem a primeira ou segunda metade do vetor de folhas ordenadas pelo tempo de entrada.
+        \end{itemize}
+    \end{itemize}

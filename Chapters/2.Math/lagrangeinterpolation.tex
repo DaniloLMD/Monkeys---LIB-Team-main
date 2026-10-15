@@ -1,0 +1,18 @@
+    
+    \section{Lagrange Interpolation}
+    Suppose you have a polynomial of order $N$, and want to find $f(X)$, and $X$ is really big. With Lagrange Interpolation, we can define any $f(x)$ as a linear combination of $N+1$ $f(u)$'s ($u$ is an arbitrary value, but we will use $1,2,\dots,k+1$). The normal approach is to calc the first $N+1$ answers and use them to calculate $f(X)$. Math below:
+
+    Given the set of points $(x_0,f(x_1)),(x_2,f(x_2)),\dots,(x_k,f(x_N))$ that represent the polynomial $f(x)$ we can define auxiliary polynomials $f_i(x)$ such that (consider that $f(x_i) = y_i$):
+    \[
+    f_i(x) = \begin{cases}
+    y_i, \text{ if } x = x_i \\
+    0, \text{ if } x = x_j, j \neq i \\
+    \text{some useless value otherwise}
+    \end{cases}
+    \] 
+    This polynomial will look like $\displaystyle f_i(x) = y_i \cdot \prod_{j=0,j \neq i}^{N} \frac{x-x_j}{x_i-x_j}$, if we sum all the $f_i(x)$ polynomials we get an polynomial $g(x)$ such that $g(x_0) = y_0, g(x_1) = y_1, \dots, g(x_N) = y_N$, so $g = f$. Then $f(x) = \displaystyle \sum_{i=0}^N f_i(x) = \sum_{i=0}^N \left(y_i \cdot \prod_{j=0,j \neq i}^N \frac{x-x_j}{x_i-x_j}\right)$.
+
+    The $y_i$ is an result of other function, so we pre-calculate that in $\mathcal{O}(N)$.
+
+    \inputwithhash{./solutions/Math/lagrange.cpp}
+    % Teoria dos numeros vai ter uma seção propria

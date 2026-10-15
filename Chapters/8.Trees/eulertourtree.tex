@@ -1,0 +1,8 @@
+
+    
+    \section{Euler tour tree}
+    Euler tour é uma maneira de representar uma árvore usando o tempo de entrada e saída de cada nó para transformá-la em um vetor. Você pode usá-lo de 2 maneiras:
+    \begin{itemize}
+        \item Colocando o valor de um nó no tempo de entrada \texttt{tin} e não colocar nada no tempo de saída \texttt{tout}. Assim você pode fazer queries em subárvores.
+        \item Colocar o valor de um nó no tempo de entrada \texttt{tin} e colocar o inverso do valor no tempo de saída \texttt{tout}. Se você realizar queries em caminhos que você entra e sai, a contribuição desse nó é cancelada. Para fazer a query de um path $u\rightarrow v$, você faz query da raiz para $u$, da raiz para $v$ e excluir $2$ vezes a query da raiz para $\text{lca}(u,v)$.
+    \end{itemize}

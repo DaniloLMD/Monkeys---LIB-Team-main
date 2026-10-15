@@ -1,0 +1,16 @@
+\section{Persistente}
+
+\inputwithhash{./solutions/DataStructures/Segtree/persistent_segtree.cpp}
+
+Solution for Spoj Count on a Tree,
+Given a tree there are $Q$ queries where you need to find the $k$th minimum weigth in a path between $u$ and $v$, it also needs the lca and lca's father between $u$ and $v$.
+
+You make a Segtree for each path from the root to each node. And walk on the Seg to get the sum from the path of the root to the queries minus the sum of the root to LCA.
+
+Queries in $O(log(n))$
+
+\inputwithhash{./solutions/DataStructures/Segtree/CountOnATree.cpp}
+
+\subsection{Persistente com Lazy}
+
+\inputwithhash{./solutions/DataStructures/Segtree/persistent_lazy.cpp}

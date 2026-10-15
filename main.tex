@@ -1,0 +1,261 @@
+\documentclass[11pt,a4paper]{book}
+% \usepackage{titlesec}
+\usepackage[legalpaper, margin=0.8in]{geometry}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{paracol}
+\usepackage{indentfirst}
+\usepackage{tikz}
+\usetikzlibrary {graphs,quotes}
+\usepackage[colorlinks=true,linkcolor=blue!80!brown!80!red]{hyperref}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\mod}[1]{\;\left(\bmod\; #1\right)}
+\newcommand\tab[1][0.5cm]{\hspace*{#1}}
+\newread\hashfile
+\newcommand{\hashlineid}[1]{%
+  \ifnum#1<10 00#1\else\ifnum#1<100 0#1\else#1\fi\fi
+}
+\newcommand{\hashlookup}[1]{%
+  \ifcsname hashline\number\numexpr#1\relax\endcsname
+    \csname hashline\number\numexpr#1\relax\endcsname
+  \fi
+}
+\newcommand{\hashnumberstyle}[1]{%
+  \scriptsize\color{black}\ttfamily\makebox[8.2em][r]{\hashlineid{#1} \hashlookup{#1}}%
+}
+\newcommand{\readhashline}[1]{%
+  \expandafter\parsehashline#1 \relax
+}
+\def\parsehashline#1 #2\relax{%
+  \def\hashindex{#1}%
+  \def\hashvalue{#2}%
+  \def\hashalllabel{ALL}%
+  \ifx\hashindex\hashalllabel
+    \def\hashall{#2}%
+  \else
+    \expandafter\def\csname hashline\number\numexpr#1\relax\endcsname{#2}%
+  \fi
+}
+\newcommand{\loadhashes}[1]{%
+  \def\hashall{}%
+  \openin\hashfile=#1.hash
+  \loop
+    \read\hashfile to \hashline
+    \ifeof\hashfile\else
+    \readhashline{\hashline}%
+  \repeat
+  \closein\hashfile
+}
+\newcommand{\inputwithhash}[1]{%
+  \noindent
+  \begingroup
+  \loadhashes{#1}
+  \lstinputlisting[
+    basicstyle=\ttfamily\footnotesize,
+    numberstyle=\hashnumberstyle,
+    xleftmargin=2.4em,
+    numbersep=3pt
+  ]{#1}
+  \noindent\hspace*{5.2em}\llap{\scriptsize\color{black}\ttfamily\makebox[8.2em][r]{ALL \hashall}\kern3pt}\par
+  \endgroup
+}
+\usepackage{tocloft}
+
+\addtolength{\cftchapnumwidth}{15pt}
+
+
+\definecolor{mygreen}{rgb}{0.1,0.1,1.0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\ttfamily,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=false,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=C++,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces \lstinputlisting; also try caption instead of title
+}
+% \title{Monkeys LIB 2.0\\ Guadalajara Edition}
+
+% \subtitle{Guadalajara Edition}
+\author{Monkeys}
+\date{2025}
+
+\begin{document}
+\begin{titlingpage} %This starts the title page
+\begin{center}
+\includegraphics[width=5cm]{monkeys vazado azul.png}\\ %Put the logo you want here
+\vspace{8cm} %You can control the vertical distance
+\begin{huge} 
+\textbf{Monkeys LIB 5.0} \\
+\theauthor\\
+\end{huge}
+\vspace{12cm} %Put the distance you need.
+\includegraphics[width=5.5cm]{UFG_LOGO.png}\\ %Put the logo you want here
+\begin{LARGE}
+\thedate
+\end{LARGE}
+\end{center}
+\end{titlingpage}
+ 
+ % https://www.overleaf.com/7646931546nfyjyscbbjjm
+{\fontsize{40}{48} \selectfont }
+\tableofcontents{}
+\chapter{Início}
+  \input{Chapters/Begin/autores}
+  \input{Chapters/Begin/template}
+  \input{Chapters/Begin/makefile}
+  \input{Chapters/Begin/terminaltricks}
+  \input{Chapters/Begin/stresstest}
+  \input{Chapters/Begin/hashchecker}
+  \input{Chapters/Begin/python}
+  \input{Chapters/Begin/CLI}
+  \chapter{Math}
+  \input{Chapters/2.Math/coisasuteis}
+  \input{Chapters/2.Math/inteiromodular}
+  \input{Chapters/2.Math/matrixpower}
+  \input{Chapters/2.Math/fft}
+  \input{Chapters/2.Math/gauss}
+  \input{Chapters/2.Math/simplex}
+  \input{Chapters/2.Math/implementationofpolynomials}
+  \input{Chapters/2.Math/combinatoria}
+  \input{Chapters/2.Math/lagrangeinterpolation}
+  \input{Chapters/2.Math/teoriadosnumeros}
+  \input{Chapters/2.Math/nelsisanotations}
+  \input{Chapters/2.Math/josephusproblem}
+\chapter{Data Structures}
+  \input{Chapters/3.DataStructures/dicas}
+  \input{Chapters/3.DataStructures/orderedset}
+  \input{Chapters/3.DataStructures/fenwicktree}
+  \input{Chapters/3.DataStructures/sparsetable}
+  \input{Chapters/3.DataStructures/sqrtdecomposition}
+  \input{Chapters/3.DataStructures/implicittreap}
+  \input{Chapters/3.DataStructures/dsu}
+  \input{Chapters/3.DataStructures/linkedlist}
+  \input{Chapters/3.DataStructures/monotonicstack}
+  \input{Chapters/3.DataStructures/rangeminimumqueries}
+  \input{Chapters/3.DataStructures/intervalmanager}
+  \input{Chapters/3.DataStructures/persistent}
+  \input{Chapters/3.DataStructures/dimensions}
+\chapter{Segment Tree}
+  \input{Chapters/4.SegmentTree/semlazy}
+  \input{Chapters/4.SegmentTree/comlazy}
+  \input{Chapters/4.SegmentTree/implicita}
+  \input{Chapters/4.SegmentTree/persistente}
+  \input{Chapters/4.SegmentTree/contarminimosuniaodeareaderetangulos}
+  \input{Chapters/4.SegmentTree/mergesorttree}
+  \input{Chapters/4.SegmentTree/segmenttreebeats}
+  \input{Chapters/4.SegmentTree/wavelettree}
+\chapter{Dynammic Programming}
+  \input{Chapters/5.DynamicProgramming/dicas}
+  \input{Chapters/5.DynamicProgramming/exchangearguments}
+  \input{Chapters/5.DynamicProgramming/exponenciacaodematriz}
+  \input{Chapters/5.DynamicProgramming/fastknapsack3ktrick}
+  \input{Chapters/5.DynamicProgramming/sosdp}
+  \input{Chapters/5.DynamicProgramming/permutationtricks}
+  \input{Chapters/5.DynamicProgramming/iterating2subtrees}
+  \input{Chapters/5.DynamicProgramming/openintervaltrick}
+  \input{Chapters/5.DynamicProgramming/convexhulltrick}
+  \input{Chapters/5.DynamicProgramming/slopetrick}
+  \input{Chapters/5.DynamicProgramming/steinertreedp}
+  \input{Chapters/5.DynamicProgramming/parentmonotonicity}
+\chapter{String}
+  \input{Chapters/6.Strings/dicas}
+  \input{Chapters/6.Strings/stringhash}
+  \input{Chapters/6.Strings/kmp}
+  \input{Chapters/6.Strings/zfunction}
+  \input{Chapters/6.Strings/manacher}
+  \input{Chapters/6.Strings/suffixarray}
+  \input{Chapters/6.Strings/suffixautomaton}
+  \input{Chapters/6.Strings/suffixtree}
+  \input{Chapters/6.Strings/ahocorasick}
+  \input{Chapters/6.Strings/palindromictree}
+  \input{Chapters/6.Strings/minimalrotation}
+  \input{Chapters/6.Strings/trie}
+\chapter{Graph}
+  \input{Chapters/7.Graph/dicas}
+  \input{Chapters/7.Graph/flow}
+  \input{Chapters/7.Graph/matching}
+  \input{Chapters/7.Graph/bellmanford}
+  \input{Chapters/7.Graph/2sat}
+  \input{Chapters/7.Graph/componentesfortementeconexas}
+  \input{Chapters/7.Graph/stablemarriage}
+  \input{Chapters/7.Graph/planargraphs}
+  \input{Chapters/7.Graph/dominatortree}
+  \input{Chapters/7.Graph/chinesepostmanproblem}
+  \input{Chapters/7.Graph/grafoseulerianos}
+  \input{Chapters/7.Graph/somebridgerelatedtopics}
+\chapter{Trees}
+  \input{Chapters/8.Trees/dicas}
+  \input{Chapters/8.Trees/diameter}
+  \input{Chapters/8.Trees/lca}
+  \input{Chapters/8.Trees/eulertourtree}
+  \input{Chapters/8.Trees/smalltolarge}
+  \input{Chapters/8.Trees/hld}
+  \input{Chapters/8.Trees/centroiddecomposition}
+  \input{Chapters/8.Trees/treeisomorphism}
+  \input{Chapters/8.Trees/virtualtree}
+  \input{Chapters/8.Trees/linkcuttree}
+\chapter{Geometry}
+  \input{Chapters/9.Geometry/dicas}
+  \input{Chapters/9.Geometry/simplegeometry}
+  \input{Chapters/9.Geometry/convexhull}
+  \input{Chapters/9.Geometry/linesweep}
+  \input{Chapters/9.Geometry/minimumperimetertriangle}
+\chapter{Miscellaneous}
+  \input{Chapters/10.Miscellaneous/gametheory}
+  \input{Chapters/10.Miscellaneous/binarysearch}
+  \input{Chapters/10.Miscellaneous/bignum}
+  \input{Chapters/10.Miscellaneous/fractions}
+  \input{Chapters/10.Miscellaneous/bitsets}
+  \input{Chapters/10.Miscellaneous/builtinfunctions}
+  \input{Chapters/10.Miscellaneous/priorityqueueandsetcomparators}
+  \input{Chapters/10.Miscellaneous/lambdaexpressions}
+  \input{Chapters/10.Miscellaneous/fastinputoutput}
+  \input{Chapters/10.Miscellaneous/trickforfasterunorderedmap}
+  \input{Chapters/10.Miscellaneous/fasterhashtable}
+  \input{Chapters/10.Miscellaneous/stringstream}
+  \input{Chapters/10.Miscellaneous/karmarkarkarp}
+\chapter{Problemas}
+  \input{Chapters/11.Problemas/grupos}
+  \input{Chapters/11.Problemas/maxarea}
+  \input{Chapters/11.Problemas/vida}
+  \input{Chapters/11.Problemas/customatriz}
+  \input{Chapters/11.Problemas/inverterpontos}
+  \input{Chapters/11.Problemas/manhattan}
+\end{document}
+
+% Para adicionar:
+% github.com/felipesabino1/questoes_boas/DP/Bitmask/Matrix Exponentiation
+% github.com/felipesabino1/questoes_boas/DP/Probability and Combinatorics/Pin some Element/ Cycles (Difficult).cpp
+% Problema de LP com Bellman Ford
+% Mo em arvore

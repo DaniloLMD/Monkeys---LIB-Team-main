@@ -1,0 +1,15 @@
+\section{Suffix Automaton}
+Most of harder problems, you can just sort the states by len, and walk from greater to smaller making some updates in a dp like style.
+
+Properties:
+\begin{itemize}
+    \item It's an automaton that accepts every suffix of the given string.
+    \item Every substring corresponds to a path in the automaton and vice versa.
+    \item Every node correspond to a set of substrings that appears in the same positions of the original string ($endpos$).
+    \item Denote $longest(u)$ and $shortest(u)$ the longest and shortest strings of the node $u$, all strings are different suffixes of $longest(u)$ and have all
+possible lengths in the interval $[shortest(u).len,longest(u).len]$.
+    \item The suffix links of $u$, denote it by $ant(u)$, points to the next longest substring that isn't in node $u$ (and it's a suffix of the strings in $u$).
+Every occurrence of the strings of $u$ also have $ant(u)$. 
+\end{itemize}
+
+\inputwithhash{./solutions/String/SuffixAutomaton.cpp}

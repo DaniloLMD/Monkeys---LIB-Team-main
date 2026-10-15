@@ -1,0 +1,10 @@
+
+\section{Maximizar área de uma matriz em que todas as células são válidas}
+%https://codeforces.com/group/btcK4I5D5f/contest/623901/problem/L
+Dado uma matriz $N\times M$, cada célula pode ser válida ou inválida, qual a maior área que contém só células válidas?
+
+Podemos resolver esse problema em $\mathcal{O}(N \times M)$, a ideia da solução é manter para cada linha qual o maior segmento contíguos de células válidas e daí iterar nas colunas e considerar pra cada linha a partir da coluna, que essa linha é um "limitante" para uma sub-matriz que contem essa linha. E manter as linhas mais acima da atual que tem tamanho maior ou igual a linha atual.
+
+Vamos pré-calcular alguns valores, pra cada célula $(i,j)$ vamos calcular $dist(i,j)$ que é o tamanho da sequência começando em $(i,j)$ que só contém células válidas, conseguimos calcular isso em $\mathcal{O}(N \times M)$. Agora vamos calcular para cada célula $(i,j)$, dois valores $acima(i,j)$ e $abaixo(i,j)$, tal que $acima(i,j)$ é a linha $X$ mais acima de tal modo que $\displaystyle \min_{X \le k \le i}\{dist(k,j)\} = dist(i,j)$, o $abaixo(i,j)$ é a linha mais abaixo que obedece a mesma restrição. Para calcular isso podemos iterar pelas colunas e iterar nas linhas e calcular o cara mais distante com valor maior ou igual a linha atual usando esquema com \texttt{stack}. Depois de calcular esses valores, podemos iterar pelas células e verificar os valores de $acima(i,j)$ e $abaixo(i,j)$ e calcular $ans = \max\{ans, dist(i,j) \cdot (abaixo(i,j) - acima(i,j) + 1)\}$. Um adendo é que não precisamos fazer uma matriz para $acima$ e $abaixo$, podemos só fazer um vetor que representa a uma coluna e daí calculamos pra cada coluna e já calculamos a resposta pra essa coluna.
+
+\inputwithhash{./solutions/Problemas/MaxAreaMatriz.cpp}

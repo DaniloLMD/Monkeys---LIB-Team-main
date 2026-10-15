@@ -1,0 +1,36 @@
+\section{SQRT Decomposition}
+
+\subsection{MO}
+
+In the Persistent DSU section, there is a very hard application of MO. Solve static queries in offline in $\mathcal{O}(Q\cdot \sqrt{N})$ where $Q$ is the number of queries and $N$ the vector size.
+\inputwithhash{./solutions/DataStructures/mo.cpp}
+
+\subsection{MO com queries}
+
+Um ponto importante é que se nós fizermos aquele esquema de decompor a query de path em arvore em uma query no range do euler tour, também podemos usar mo. 
+\inputwithhash{./solutions/DataStructures/moupdate.cpp}
+
+\subsection{Blocking}
+We partition the array into blocks of size $\texttt{block\_size}=\lceil \sqrt{N} \rceil$. Each block stores the answer for the elements within it.
+
+Update in $\mathcal{O}(1)$. To update an element at location $x$, find the block of it ($\frac{x}{\texttt{block\_size}}$), remove the $x$ contribution and add the new one.
+
+Query in $\mathcal{O}(\sqrt{N})$. For each complete block between the $(l,r)$ of the query, add the already calculated contribution, for the left and right part iterate over it.
+Since there is at most $\sqrt{N}$ blocks and each block has $\sqrt{N}$ of size, we at most iterate $\sqrt{N}*3$.
+\inputwithhash{./solutions/DataStructures/blocking.cpp}
+
+\subsection{Blocking com cyclic shift}
+Legendary Huron is a fan of beautiful fences. He defines the beauty of a sequence (l,r) is $max_{l \leq i \leq j \leq r}(a[j]-a[i])$
+Queries
+
+Given three integers l, r, k, he will repaint the planks in the range [l,r]. With a[l] = k, a[l+1] = k+1 ...;
+Given two integers l and r, returns the beauty.
+\inputwithhash{./solutions/DataStructures/sqrtdecomp.cpp}
+
+\subsection{Batching}
+Maintain a "buffer" of the latest updates (up to $\sqrt N$). The answer for each
+sum query can be calculated with prefix sums and by examining each update within
+the buffer. When the buffer gets too large ($\ge \sqrt N$), clear it and
+recalculate prefix sums.
+
+\inputwithhash{./solutions/DataStructures/batching.cpp}

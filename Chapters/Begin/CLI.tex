@@ -1,0 +1,40 @@
+\section{CLI}
+
+Guia rápido de como usar o terminal para fazer submissão, ver submissão, ver placar e etc.
+
+\subsection{Antes de começar a prova}
+
+Antes de começar a prova, rode o comando:
+
+\texttt{curl -fsSL https://moj.naquadah.com.br/moj-comp -o ~/.local/bin/moj-comp \&\& chmod +x ~/.local/bin/moj-comp} 
+
+Ele vai importar os comandos de terminal para você conseguir fazer tudo. 
+Depois rode \texttt{moj-comp login <id|url>}, quando você rodar ele vai pedir o login e a senha. Por último, rode \texttt{moj-comp fetch}, ele vai baixar todos os enunciados, se cair o contest tá safe.
+
+\subsection{Modo offline}
+
+Se a rede cair, relaxa que você pode enviar pelo terminal e o tempo vai ser o tempo que você submitou pelo terminal. Quando o submit não alcança o servidor, a CLI entra no modo emergencial sozinha:
+
+\begin{verbatim}
+$ moj-comp submit C sol.cpp
+⚠ SEM REDE — ativando o modo emergencial.
+submissão EMPACOTADA offline: C, sol.cpp, carimbo UTC 14:32:07.
+ela vale NO HORÁRIO DO CARIMBO quando a rede voltar. Deixe rodando: moj-comp monitor
+\end{verbatim}
+
+Daí, deixe o seguinte comando rodando num terminal (o comando mostra a fila e tenta reenviar sozinho a cada 15s, também acompanha os vereditos quando a rede voltar):
+
+\begin{verbatim}
+$ moj-comp monitor
+[14:33:02] rede: OFFLINE · fila: 1 pacote(s)
+  1784561527-000.pkt  carimbo 14:32:07 (há 1min)
+[14:41:17] rede: ONLINE · fila: 1 pacote(s)
+✓ 1784561527-000.pkt ACEITA — contabilizada às 14:32:07 UTC (id 3f9a…)
+veredicto: Accepted
+\end{verbatim}
+
+Além disso, seu código fica protegido: em disco de laboratório, o pacote na fila é ilegível p/ os outros (só o servidor abre). Quando aceita, entra no placar NO HORÁRIO DO CARIMBO, ou seja, a penalidade calculada como se a rede nunca tivesse caído.
+
+\subsection{Comandos gerais}
+
+\inputwithhash{CLI_comandos}

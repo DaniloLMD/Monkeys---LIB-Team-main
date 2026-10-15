@@ -1,0 +1,72 @@
+
+\section{Minimizar soma de coordenadas com operação de ``inverter'' dois pontos em sequência}
+%https://atcoder.jp/contests/arc189/tasks/arc189_b
+Dado $N$ pontos com coordenadas inteiras distintas dispostos numa linha, é possível realizar uma operação: escolher um inteiro $i$ tal que $1 \le i \le N-3$ e, seja $M$ o ponto médio entre as posições do $i$-ésimo e $(i+3)$-ésimo pontos em ordem crescente de coordenadas, mova os $(i+1)$-ésimo e $(i+2)$-ésimo pontos para suas posições simétricas em relação a $M$. Faça as operações de modo a minimizar a soma das coordenadas dos $N$ pontos.
+
+Podemos resolver esse problema em $\mathcal{O}(N \log(N))$, a ideia principal da solução é pensar nos pontos em termo da distância dele para o ponto anterior. Calculando essas distâncias, podemos ordená-las por um critério e usar essa ordenação para calcular a resposta.
+
+Primeiro vamos determinar como uma operação realizada em $i$ altera os pontos $i+1$ e $i+2$. Considerando $X_i$ como a localização do $i$-ésimo ponto e $M$ como ponto médio de $X_i$ e $X_{i+3}$, temos duas situações de operação para $X_j$, ponto entre $X_i$ e $X_{i+3}$:
+\begin{itemize}
+    \item $X_j$ antes de $M$: $X_j \xrightarrow{op} (M-X_j)+M \rightarrow 2M-X_j$
+    \item $X_j$ depois de $M$: $X_j \xrightarrow{op} M-(X_j-M) \rightarrow 2M-X_j$
+\end{itemize}
+Então independente da posição de $X_j$ em relação a $M$ sua nova posição é $2M - X_j = (X_i+X_{i+3})-X_j$. Assim a nova posição dos pontos vai ser:
+\[
+    \begin{cases}
+    X_i &= X_i \\
+    X_{i+1} &= X_{i+1} \\
+    X_{i+2} &= X_{i+2} \\
+    X_{i+3} &= X_{i+3}  
+    \end{cases}
+    \xrightarrow{op}
+    \begin{cases}
+    X'_i &= X_i \\
+    X'_{i+1} &= (X_i+X_{i+3})-X_{i+2} \\
+    X'_{i+2} &= (X_i+X_{i+3})-X_{i+1} \\
+    X'_{i+3} &= X_{i+3} 
+    \end{cases}
+\]
+
+Vamos mudar a forma como representamos os pontos, considerando $d_j = X_j - X_{j-1}$, vamos representar os pontos como $X_i = \sum_{j=1}^id_j = X_{i-1} + d_i$ (considere $X_0 = 0$). Ou seja, vamos representar um ponto usando a distância dele para os pontos anteriores, vamos olhar essas distâncias realizando a operação:
+\[
+    \begin{cases}
+    X_i &= X_{i-1}+d_i \\
+    X_{i+1} &= X_i+d_{i+1} \\
+    X_{i+2} &= X_{i+1}+d_{i+2} \\
+    X_{i+3} &= X_{i+2}+d_{i+3}  
+    \end{cases}
+    \xrightarrow{op}
+    \begin{cases}
+    X'_i     &= X'_{i-1}+d'_i \\
+    X'_{i+1} &= X'_i+d'_{i+1} \\
+    X'_{i+2} &= X'_{i+1}+d'_{i+2} \\
+    X'_{i+3} &= X'_{i+2}+d'_{i+3}
+    \end{cases}
+    \rightarrow
+    \begin{cases}
+    d'_i     &= X'_i - X'_{i-1} \\
+    d'_{i+1} &= X'_{i+1} - X'_i \\
+    d'_{i+2} &= X'_{i+2} - X'_{i+1} \\
+    d'_{i+3} &= X'_{i+3} - X'_{i+2}
+    \end{cases}
+    \rightarrow
+\]
+\[
+    \begin{cases}
+    d'_i     &= X_i - X_{i-1} \\
+    d'_{i+1} &= (X_i+X_{i+3}-X_{i+2}) - X_i \\
+    d'_{i+2} &= (X_i+X_{i+3}-X_{i+1}) - (X_i+X_{i+3}-X_{i+2}) \\
+    d'_{i+3} &= X_{i+3} - (X_i+X_{i+3}-X_{i+1})
+    \end{cases}
+    \rightarrow
+    \begin{cases}
+    d'_i     &= d_i \\
+    d'_{i+1} &= d_{i+3} \\
+    d'_{i+2} &= d_{i+2} \\
+    d'_{i+3} &= d_{i+1}
+    \end{cases}
+\]
+
+Assim, realizar a operação troca as distâncias $d_{i+1}$ com $d_{i+3}$, ou seja, você só troca as distâncias de lugar. Além disso, essa troca só acontece com distâncias de mesma paridade, as distâncias que aparecem mais cedo, vai contribuir mais para o somatório, então ordenamos as distâncias e colocamos as menores primeiro.
+
+\inputwithhash{./solutions/Problemas/MinimizeSum.cpp}

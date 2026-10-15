@@ -1,0 +1,44 @@
+\section{Iterating in 2 subtrees at the same time}
+
+Suppose you are solving a tree problem with dynamic programming. Your DP states look like this: for every vertex $u$ you have a vector $dp[u]$ and the length of this vector is 
+at most the number of descendants of $u$. The DP is calculated like this:
+\begin{verbatim}
+ function calc_dp (u):
+     for each child v of u:
+         calc_dp(v);
+     for each child v of u:
+         for each child w of u other than v:
+              for i in 0..length(dp[v]):
+                  for j in in 0..length(dp[w]):
+                      # calculate something 
+                      # typically based on dp[v][i] and dp[w][j]
+                      # commonly assign to dp[u][i + j]
+ 
+ calc_dp(root);
+\end{verbatim}
+
+The complexity of this is $\mathcal{O}(N^2)$ (this is not obvious: when I first saw it I didn't realize it was better than cubic).
+
+Consider the algorithm for a fixed $u$. For each child $v$ of $u$, we associate every position in the array $dp[v]$ with a descendant of $v$. 
+The array $dp[v]$ is no longer than the number of descendants of $v$, so we can make sure no two elements in the subtree are associated with the 
+same elements in the array. So when you iterate for $i$ and $j$ you are making a pair of 2 vertexs, one in the subtree of $v$ and another in the
+subtree of $w$, this pair of vertices won't repeat. So every pair of vertexes in the tree appears only 1 time.
+
+This logic also apply for algorithms like this:
+\begin{verbatim}
+ function calc_dp (u):
+     for each child v of u:
+         calc_dp(v);
+     tot = 1;
+     for each child v of u:
+         for i in 0..tot+length(dp[v]):
+              tmp[i] = off;
+         for i in 0..tot:
+              for j in 0..length(dp[v]):
+                  tmp[i+j] = calc(dp[u][i],dp[v][j]);
+         for i in 0..tot+length(dp[v]):
+              dp[u][i] = tmp[i];
+         tot += length(dp[v]);
+ 
+ calc_dp(root);
+\end{verbatim}

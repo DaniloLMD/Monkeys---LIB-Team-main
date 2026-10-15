@@ -1,0 +1,32 @@
+
+    \section{Convex Hull}
+        \subsection{Rotation Calipers}
+        Diameter from a convex Polygon.
+        
+        Solution $O(n)$. Original Problem (NCPC 2013 - D).
+        
+        \ \\
+        
+        \begin{tabular}{|p{31cm}|}
+          \begin{verbatim}
+            Implementacao do Convex Hull do CP-ALGORITHMS
+            Para usar crie um vetor com os pontos,
+            		vector<pt> pts;
+            e execute
+            		convex_hull(|pts|);
+            Apos isso, o vector pts sera alterado e ele so tera os pontos do Convex Hull 
+            na ordem horaria, comecando do elemento de menor x, como segunda condicao menor y.
+            
+            Como funciona o algoritmo
+            - Acha os dois extremos de x.
+            - Monta dois subgrupos, os "up" e os "down", em relacao
+            Convex Hull na parte superior e inferior.
+            - Itera pelos pontos e usa o produto vetorial para ver se
+            ele forma um sentido horario, se formar adiciona.
+            - Remove todos os anteriores ao ultimo ponto adicionado que agora, com o ponto
+            atual, formando um sentido anti-horario
+            \end{verbatim}
+        \end{tabular}
+        \\
+        
+        \inputwithhash{./solutions/Geometry/MaxDistanceBetweenPoints.cpp}

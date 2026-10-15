@@ -1,0 +1,37 @@
+
+
+\section{Bitsets}
+Some $O(N^2)$ solutions can be optimized using bitsets. Mainly knapsack problems.
+An important point is to use the "popcount" optimization  in target of pragma.
+
+how to initialize:
+
+\begin{lstlisting}
+bitset<size> variable_name;
+bitset<size> variable_name(DECIMAL_NUMBER);
+bitset<size> variable_name("BINARY_STRING")
+\end{lstlisting}
+
+Every position can be accessed as a vector, also size must be constant. We get an constant optimization of 32. every bit operation used in integers can be used in bitsets.
+
+Some functions in bitsets:
+\begin{center}
+\begin{tabular}{ c | l }
+  set()  & Set the bit value at all bitset to 1.  \\ 
+ reset() & Set the bit value at all bitset to 0.  \\  
+ flip() & Flip the bit value at all bitset.\\
+ set(idx) & Set the bit value at the given idx to 1.  \\ 
+ reset(idx) & Set the bit value at a given idx to 0.  \\  
+ flip(idx) & Flip the bit value at the given idx.\\
+ count() & Count the quantity of bits set.\\  
+ any() & Checks if any bit is set.\\
+ all() & Check if all bit is set.\\
+ none() & Checks if none bit is set.\\
+ size() & Returns the size of the bitset.\\
+ to\_string() & Converts bitset to std::string.\\
+ to\_ulong() & Converts bitset to unsigned long.\\
+ to\_ullong() & Converts bitset to unsigned long long.\\
+ \_Find\_first() & return index of first bit set. \\
+ \_Find\_next(idx) & return index of first bit set after idx.
+\end{tabular}
+\end{center}

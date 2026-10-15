@@ -1,0 +1,26 @@
+
+\section{Quantidade mínima de movimentos com restrição de vida}
+%https://codeforces.com/problemset/problem/2149/F
+Um herói com $H$ pontos de vida começa no ponto $0$ e quer alcançar o ponto $D$, para alcançá-lo, ele pode realizar duas operações:
+\begin{itemize}
+    \item Descansar e aumentar a vida em $1$ ponto;
+    \item Mover uma posição para frente.
+\end{itemize}
+A cada movimento (alterar a posição atual), a vida do herói é decrementada, se o movimento é o $i$-ésimo consecutivo, então a vida vai cair em $i$ pontos. A cada movimento, a vida do heróis deve ser maior que $0$, qual a quantidade mínima de operações para o herói alcançar $D$? Como exemplo de operações, considere que $H = 7$ e $D = 4$, então uma sequência de operações poderiam ser:
+\begin{enumerate}
+    \item Mover de $0$ para $1$ e perder $1$ de vida;
+    \item Mover de $1$ para $2$ e perder $2$ de vida;
+    \item Mover de $2$ para $3$ e perder $3$ de vida;
+    \item Descansar e ganhar $1$ de vida;
+    \item Mover de $3$ para $4$ e perder $1$ de vida.
+\end{enumerate}
+
+Podemos resolver esse problema em $\mathcal{O}(\log(N))$, a solução é fazer uma busca binária na quantidade de dias que o herói vai descansar, e dado uma quantidade $X$ de descansos, verificar se é possível chegar no ponto $D$ sem nunca ter $H \le 0$. Para verificar se vai der certo é verificar se $r_1 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor + 1\right) + r_2 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor\right) < H + X$, tal que $r_1 = D\% (X+1)$ (resto da divisão), $r_2 = (X+1) - r_1$ e $PA(X) = \sum_{i=1}^X i$.
+
+O mínimo de operações para chegar em $D$ é igual a $D$, que seria apenas realizar $D$ movimentos para frente, então o que vai ``piorar'' a resposta são os descansos. Vamos supor que você vai ter $X$ descansos, vamos ver se é possível saber se com esses $X$ descansos conseguimos chegar ao final de tal modo que $H > 0$ em todo momento. Vamos considerar a configuração que perdemos menos vida, essa configuração vai ser colocar os descansos em posições uniformes, então vamos ter intervalos contíguos de tamanho mais ou menos igual de operações de movimentos, para cada intervalo vamos perder $PA(TAM)$ de vida tal que $TAM$ é o tamanho do intervalo.
+
+Vamos calcular o custo dessa configuração, se temos $X$ descansos, vamos ter $X+1$ intervalos contíguos de movimentos para frente. Desses intervalos, $r_1 = D\%(X+1)$ intervalos vão ter tamanho $\lfloor\frac{D}{X+1}\rfloor+1$ e $r_2 = (X+1) - r_1$ vão ter tamanho $\lfloor\frac{D}{X+1}\rfloor$, assim, vamos perder $r_1 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor + 1\right) + r_2 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor\right)$ pontos de vida na melhor configuração. Uma afirmação é dizer que só conseguimos chegar a $D$ com $X$ descansos se minimamente nossa vida máxima é maior que o quanto de vida perdemos, ou seja, $r_1 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor + 1\right) + r_2 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor\right) < H + X$. Porque, caso contrário, qualquer configuração $S$, vai ter custo maior ou igual ao custo ideal, e temos que chegar no final com valor maior que $0$, assim o custo tem que ser menor que o máximo de vida que é $H + X$.
+
+Outra afirmação é que se $r_1 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor + 1\right) + r_2 \cdot PA\left(\lfloor\frac{D}{X+1}\rfloor\right) < H + X$, então a configuração uniforme vai dar certo, ou seja, em todo momento $H > 0$. Mas o que garante que não existe um momento em que a vida é menor ou igual a $0$, mesmo que a desigualdade seja verdade? Suponha que numa configuração a vida chegue a um valor menor ou igual a $0$ e isso aconteça num ponto $P$, com certeza é impossível chegar no ponto $D$ com uma vida maior que zero, pois seria necessário que o saldo de vida entre $P+1$ e $D$, seja positivo, mas isso é impossível, pois colocando os descansos em pontos uniformes, qualquer sufixo começando em $D$ vai ter saldo menor ou igual a $0$. Assim, se a desigualdade vale, é impossível em qualquer ponto a vida estar menor ou igual a $0$.
+
+\inputwithhash{./solutions/Problemas/NezukointheClearing.cpp}

@@ -1,0 +1,53 @@
+    \section{Game Theory}
+        Vamos nos importar com os jogos imparciais com dois jogadores, ou seja, jogos em que os movimentos disponíveis e a vitória/derrota depende apenas do estado do jogo. Em outras palavras, a única diferença entre os dois jogadores é que um deles se move primeiro. Além disso, assumimos que o jogo são de informação perfeita, ou seja, não existe informação que é escondida dos jogadores (os jogadores sabem as regras e os possíveis movimentos), assim os jogadores sempre podem tomar decisões ótimas. Assume-se que o jogo é finito, depois de um certo número de movimentos, algum dos jogadores vai estar em um estado perdedor, e sempre alguém perde e alguém ganha. 
+        
+        Esses jogos podem ser vistos como grafos direcionados acíclicos, os vértices são estados e as arestas são movimentos. Um vértice com grau de saída zero é um vértice perdedor (o jogador que tiver que fazer um movimento nesse estado perde).
+
+        Um estado perdedor é aquele que todos os movimentos levam a um estado vencedor para o outro jogador e um estado vencedor é aquele em que existe ao menos uma transição para um estado perdedor.
+
+        \subsection{Jogo de Nim}
+        Qualquer jogo imparcial pode ser reduzido a um jogo de Nim (jogo das pilhas de pedras). Nesse jogo o estado é determinado de acordo com o xor das quantidades das pilhas de pedras que temos, se o xor é zero, o estado é perdedor, se o xor é diferente de zero, o estado é vencedor.
+        \subsection{Teorema de Sprague-Grundy}
+        Vamos reduzir cada estado do jogo a um estado do jogo de Nim, mais especificamente cada estado do jogo original pode ser mapeado para um jogo de Nim com uma pilha de tamanho $x$. O número $x$ é chamado de valor de Grundy ou valor-nim do estado. Além disso, esse número pode ser calculado da seguinte maneira:
+
+        \[
+        x = \text{mex} \ \{x_1, \dots, x_k \}
+        \]
+
+        Onde $x_i$ é o valor de Grundy para todo os próximos estados a partir do estado atual (vértices que o estado atual pode transitar para). Vendo o jogo como um grafo, podemos calcular o valores de Grundy começando dos vértices com grau de saída igual a zero. Assim os estados vencedores são aqueles diferentes de zero, e os perdedores são os iguais a zero, assim como no jogo de Nim.
+
+        A ideia é que os estados perdedores são jogos de Nim que não tem nenhuma pedra, e nesses estados, o mex é igual a zero, pois eles são vistos como vértices sem grau de saída. Os outros estados (vértices), tem estados alcançáveis, e esses estados só podem ser alcançados ao realizar um movimento, como estamos reduzindo o jogo a um jogo de Nim, temos que tirar ou colocar uma quantidade de pedras. Então a partir do valor atual (que representa uma pilha de pedras) temos que conseguir gerar todos os valores adjacentes, e o valor que resume isso é o mex dos valores adjacentes. Uma vez que a partir do mex, conseguimos gerar todos os valores menores que o mex tirando alguma quantidade de pedras, e conseguimos gerar todos os valores maiores, colocando alguma quantidade de pedras. 
+        
+        Mas uma pergunta seria, porque o valor de Grundy não pode ser qualquer outro valor? Ele não pode ser um valor maior que o mex, porque se fosse, esse estado teria que conseguir gerar o estado com o mex tirando alguma quantidade de pedras, mas esse estado não existe (porque se existisse o mex não seria o mex). Ele não pode ser menor também, porquê significa que estamos realizando um movimento em que tiramos nenhuma pedra (movimentar para o vértice que tem mesmo valor de Grundy que o meu), mas isso não pode acontecer no jogo de Nim.
+
+        Para calcular o número de Grundy, fazemos:
+        \begin{itemize}
+            \item Obter todas as possíveis transições a partir do estado atual;
+            \item Cada transição pode levar a um conjunto independente de jogos, calculamos o valor de Grundy para cada jogo de maneira independente e depois fazemos o xor-sum deles, uma vez que cada jogo é uma pilha do jogo de Nim.
+            \item Depois de calcular os valores de Grundy para cada transição, calculamos o estado atual como o \text{mex} desses números.
+        \end{itemize}
+
+        \subsection{Dicas}
+        \begin{itemize}
+            \item \textit{Teoria do Espelhamento}: Se o seu oponente pode espelhar todas as suas ações, este é um estado de derrota.
+            \item Podem existir ciclos modulares, vale brutar.
+            \item Em algum momento pode se tornar sempre win, ou sempre loss.
+            \item Se a gente transformar o problema num nim, podemos usar o teorema de grundy, que basicamente é achar os casos derrota + fazer o mex.
+        \end{itemize}
+        
+        Example 1: There is a heap of $n$ coins and two players who move alternately. On each move, a player chooses a heap and divides into two nonempty heaps that have a different number of coins. The player who makes the last move wins the game. Here for big N the answer is always first.
+
+        
+    \inputwithhash{./solutions/Miscellaneous/GrundyGame.cpp}
+
+        Example 2: There is a staircase consisting of $n$ stairs, numbered $1,2,\ldots,n$. Initially, each stair has some number of balls. There are two players who move alternately. On each move, a player chooses a stair $k$ where $k\neq1$ and it has at least one ball. Then, the player moves any number of balls from stair $k$ to stair $k-1$. The player who moves last wins the game. Here, every odd position is losing, u can see them as "dark holes", using the "Teoria do Espelhamento", so it's just N/2 Nim games.
+
+        
+    \inputwithhash{./solutions/Miscellaneous/StairGame.cpp}
+
+    \subsection{Nim Multiplication}
+        A 2D NIM Game int the form of NXM can be reduced
+        to the Nim Multiplication of 2 1D NIM GAMES
+        in the form of NimMult(Grundy(N),Grundy(M))
+        
+        \inputwithhash{./solutions/Miscellaneous/NimMult.cpp}

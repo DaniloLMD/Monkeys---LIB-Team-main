@@ -1,0 +1,11 @@
+    
+    \section{Small to Large}
+    Você quer juntar vários conjuntos disjuntos, se você realizar a união dos conjuntos sempre movendo os elementos do menor conjunto para o maior conjunto. No final a complexidade vai ser $\mathcal{O}(N\log(N))$. Para fazer o processo de \texttt{merge}, podemos usar a função \texttt{swap} do \texttt{STL}, a função realiza a troca em $\mathcal{O}(1)$ (é só trocar ponteiros), mas em algumas estruturas usar \texttt{swap} não é $\mathcal{O}(1)$. Mas você pode usar \texttt{a.swap(b)}, isso é $\mathcal{O}(1)$ para a maiorias das estruturas (um exemplo de estrutura que não é $\mathcal{O}(1)$ é o \texttt{array}). A implementação pode ser usando \texttt{DSU}.
+
+
+\subsection{Small to Large com HLD Trick}
+Ao fazer o Small to Large em uma árvore, você pode realizar a decomposição da árvore em arestas leves e pesadas, daí para cada vértice não vamos fazer o Small to Large normalmente, vamos adotar uma abordagem para a aresta pesada e outra para as arestas leves. Para a aresta pesada, vamos reaproveitar a resposta dela, para as arestas leves, vamos recuperar os vértices quando atravessamos as arestas leves e calcular a contribuição desses vértices em $\mathcal{O}(N)$. Isso não fica lento, pois para a abordagem bruteforce das arestas leves, cada vértice vai ser considerado no máximo $\log(N)$ vezes, pois cada vértice só aparece na abordagem bruteforce para cada ancestral que ele é ligado por uma aresta leve, mas no caminho da raiz para o vértice vão existir no máximo $\log(N)$ arestas leves.
+
+A ideia dessa abordagem é não fazer o merge dos grupos do DSU e aí evitar uma possível complexidade que deixa a união dos grupos mais lento. Tipo no problema Distinct Colors do Cses que desse jeito não precisamos usar \texttt{map}/\texttt{set} para realizar a união dos grupos.
+
+\inputwithhash{./solutions/DataStructures/DSU_HLD.cpp}

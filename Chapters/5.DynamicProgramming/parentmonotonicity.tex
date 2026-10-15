@@ -1,0 +1,66 @@
+\section{Parent DP monotonicity and Quadrangle Inequality}
+
+Let's consider $dp(r) = \min_{l<r}\{dp(l) + C(l,r)\}$. Let $opt(r)$ be the rightmost $l$ that achieves the minimum value of $dp(r)$. If $opt(r)$ is non-decreasing, we can optimize the $dp$. However, proving the monotonicity of $opt(r)$ can be hard. One way to prove it is by showing that the cost function $C(l,r)$ satisfies the Quadrangle Inequality.
+
+\textbf{Quadrangle Inequality}: when we increment the right endpoint of our range, decrementing the left endpoint can only grow more expensive. Formally, for all $l \leq r$, $C(l - 1, r)+ C(l, r + 1) \leq C(l - 1, r + 1) + C(l, r)$ or $C(a, c) + C(b, d) \leq C(a, d) + C(b, c)$ for all $a \le b \le c \le d$. The Quadrangle Inequality implies the $opt$ monotonocity, but the converse isn't necessarily true. So $opt$ can bem monotonous even when $C(l,r)$ doesn't satisfy the inequality.
+
+The next optimizations requires that the $opt$ monotonicity holds.
+
+\subsection{1D1D Optimization}
+
+Optimize $dp(i) = \min_{j < i}\{dp(j) + C(j,i)\}$. Since $opt(j) \leq opt(i)$ for $j < i$, the $opt(i)$ function will look like (for increasing $i$):
+
+\[
+1111122222222333444444466666\dots
+\]
+
+But if we initially imagine we start the $opt$ with everything zeroed and update it as we iterate over $i$, we will have:
+
+\[
+\begin{array}{lc}
+\text{Initial state of } opt:      & 00000000000\dots \\
+\text{After calculation of }dp(1): & 00000111111\dots \\
+\text{After calculation of }dp(2): & 00000112222\dots \\
+\text{After calculation of }dp(3): &00000112223\dots \\
+~~~~~~~~~~~~~~~\vdots              & \vdots
+\end{array}
+\]
+
+We can manage this using a vector (simulating a \texttt{deque}) and binary search (similar to CHT):
+\inputwithhash{./solutions/DP/1D1D_DP.cpp}
+
+\subsection{Divide and Conquer (D\&C) DP}
+
+Optimize $dp(i,j) = \min_{k < j}\{dp(i-1,k) + C(k,j)\}$. Here we must have $opt(i,j) \leq opt(i,j+1)$, for each layer of $dp$ ($dp[0],dp[1],\dots$) we calculate the second state in a D\&C way, we calc $dp[i][(1+N)/2]$, then recursevely solve the halves. When recursing, we pass the range where $opt$ must be (because we know $opt(i,j) \leq opt(i,j+1)$).
+
+Example: You have $C$ fishers and there is $N$ fishes in a lake in an fixed order, each fish has a weight $p_i$. Each fisher will take a contiguous segment of fishes, the first one will take the first $a_1$ fishes, the second one the next $a_2$ and this goes on for the others fishers, all fishers must be caught. The time an fisher takes to fish its fishes is calculated by: "If a fisher need to fish $X$ fishes with weight equal to $Y$, then it will spend $(X \cdot Y)^2$ minutes to finish the task.". The total time is the sum for every weight of fish. We want to find a configuration to minimize the sum of the times each fisher spent fishing.
+\inputwithhash{./solutions/DP/LagoaMundau.cpp}
+
+\subsection{Knuth Optimization}
+
+Optimize $dp(i,j) = min_{i < k < j}\{dp(i,k) + dp(k,j) + C(i,j)\}$, under the condition that $opt(i,j-1) \leq opt(i,j) \leq opt(i+1,j)$. The complexity goes from $\mathcal{O}(n ^ 3)$ to $\mathcal{O}(n ^ 2)$.
+
+\inputwithhash{./solutions/DP/knuth_optimization.cpp}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{1.3cm}|c|p{4.3cm}|p{1.5cm}|p{2.2cm}|}
+\hline
+\textbf{Name} & \textbf{Recurrence} & \textbf{Condition} & \textbf{Original Complexity} & \textbf{Optimized Complexity} \\
+\hline
+\small CHT & $dp(i) = \min_{j<i}\{F(j) + b[j] * a[i]\}$ & $b[j] \geq b[j + 1]$ and $a[i] \leq a[i + 1]$ & $\mathcal{O}(n ^ 2)$ & $\mathcal{O}(n)$ or $\mathcal{O}(n \log_2(n))$ w/ line container\\
+\hline 
+\small 1D1D & $dp(i) = \min_{j < i}\{dp(j) + C(j,i)\}$ & $opt(i) \leq opt(i+1)$ & $\mathcal{O}(n^2)$ & $\mathcal{O}(n \log_2(n))$ \\
+\hline
+\small Divide and Conquer & $dp(i,j) = \min_{k < j}\{dp(i - 1,k) + C(k,j)\}$ & $opt(i,j) \leq opt(i,j+1)$ & $\mathcal{O}(kn^2)$ & $\mathcal{O}(kn\log_2(n))$ \\
+\hline
+\small Knuth& $dp(i,j) = \min_{i < k < j}\{dp(i,k) + dp(k,j) + C(i,j)\}$ &  $opt(i,j-1) \leq opt(i,j) \leq opt(i+1,j)$ & $\mathcal{O}(n ^ 3)$ & $\mathcal{O}(n ^ 2) $ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+    \item $opt(i,j)$: the smallest/largest k that gives optimal answer.
+    \item $C(i,j)$: some given cost function.
+    \item $F(j)$: value computed in constant time, frequently will be equal to $dp(j)$.
+\end{itemize}

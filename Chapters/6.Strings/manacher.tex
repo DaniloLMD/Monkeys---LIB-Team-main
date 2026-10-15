@@ -1,0 +1,6 @@
+\section{Manacher}
+A Z-Function for palindromes, given a string, builds a vector $Man$ where $Man[i]$ has the biggest palindrome such that it's 
+middle is $i$. Since the middle changes depending in the parity of the size of the palindrome, the manacher actually gives $2$ vectors, 
+one of palindrome of odd and other for even sizes. The complexity is $\mathcal{O}(N)$.
+
+\inputwithhash{./solutions/String/Manacher.cpp}

@@ -1,0 +1,12 @@
+    \section{Dominator Tree}
+    \begin{itemize}
+        \item Dominator : Dominators are defined in a directed graph with respect to a source vertex $S$. Formally, A node $u$ is said to dominate a node $w$ when related to a source vertex $S$ if all the paths from $S$ to $w$ in the graph must pass through node $u$.
+        \item Immediate Dominator : A node $u$ is said to be an immediate dominator of a node $w$ (denoted as $idom(w)$) if $u$ dominates $w$ and every other dominator of $w$ dominates $u$ (every vertex have only one immediate dominator).
+        \item Dominator Tree :  The edges $\big\{(idom(w),w) \mid w \epsilon V - \big\{S\big\} \big\}$ forms a directed tree with $S$ being the root of the tree.
+    \end{itemize}
+    
+    Note that only the vertices that are reachable from source vertex in the directed graph are considered here. It is assumed that every vertex in the graph is reachable from the source.
+
+    The problem using the structure is Critical Cities, CSES.
+    It is related to find all dominators from n, when S = 1.
+    \inputwithhash{./solutions/Graph/dominator.cpp}

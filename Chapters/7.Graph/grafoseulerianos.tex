@@ -1,0 +1,21 @@
+
+    \section{Grafos Eulerianos}
+
+    \begin{itemize}
+        \item \textbf{Circuito euleriano}: O grafo tem um circuito que visita todas as arestas do grafo (considerando que podemos repetir vértices).
+        \begin{itemize}
+            \item \textbf{Grafo bidirecional}: O grau de todos os vértices é par (você pode começar de qualquer vértice);
+            \item \textbf{Grafo unidirecional}: O grau de entrada é igual ao grau de saída para todos os vértices (você pode começar de qualquer vértice).
+        \end{itemize}
+        \item \textbf{Trilha euleriana}: O grafo tem uma trilha que visita todas as arestas do grafo (considerando que podemos repetir vértices).
+        \begin{itemize}
+            \item \textbf{Grafo bidirecional}: Existem $0$ vértices com grau ímpar (você pode começar de qualquer vértice, temos também um circuito), ou existem $2$ vértices com grau ímpar (esses dois vértices são o ponto inicial e final do caminho euleriano). Em qualquer outro caso não temos trilha euleriana.
+            \item \textbf{Grafo unidirecional}: O grau de entrada é igual ao grau de saída para todos os vértices (você pode começar de qualquer vértice, temos também um circuito), ou existe um vértice cujo grau de saída é maior que o grau de entrada por um e existe outro vértice com grau de entrada maior que o de saída por um (o vértice com grau de saída maior é o vértice inicial e o com grau de entrada maior é o vértice final). Em qualquer outro caso não temos trilha euleriano.
+        \end{itemize}
+    \end{itemize}
+
+    Primeiro verificamos se o grafo tem circuito/trilha euleriano, vemos as condições acima e vemos se \textbf{o grafo tem somente uma componente}. Se o grafo atender as condições só realizamos um DFS diferenciado para achar o circuito/trilha euleriano. A ideia é usar o tempo de saída dos caras e ir visitando as arestas que passamos.
+
+    Exemplo: Temos uma matriz $N\times M$ em que cada célula pode estar seca ou molhada e um robô que vai percorrer a matriz. O robô começa fora da matriz e pode se mover em linha reta passando por células molhadas e secas, porém ele só pode mudar de direção em células secas. Queremos que o robô mude de direção em todas as células secas de tal modo que ele não pode mudar de direção mais de uma vez em uma células, porém ele pode passar por uma célula mais de uma vez.
+
+    \inputwithhash{./solutions/Graph/InnovationsinRobotics.cpp}

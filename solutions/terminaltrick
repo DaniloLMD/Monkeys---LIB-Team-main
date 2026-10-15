@@ -1,0 +1,2 @@
+command time -v ./out //saber a alocacao e mais uma porrada de coisas roubadas
+ulimit -s unlimited //remover o limite da stack

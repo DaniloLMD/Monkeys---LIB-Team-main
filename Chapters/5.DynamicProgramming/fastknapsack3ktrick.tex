@@ -1,0 +1,17 @@
+\section{Fast Knapsack 3k trick}
+Suponha que você tem um conjunto $A$ com $N$ valores e $\sum_{i=0}^{N-1} a[i] = M$.
+Queremos calcular quais possiveis somas podemos obter. 
+
+Primeiro, se todos os valores são distintos $ N < \sqrt{M}$. Se não, podemos representar os $K$ 
+caras iguais a $x$ como sendo $x, 2x, 4x, \dots$ até o maior $2^i < K$ assim esses elementos 
+representaram a mesma soma que os anteriores (você possivelmente vai guardar mais de um cara do 
+tipo $x$ por exemplo, mas o ponto eh que a mochila de quais somas você consegue formar não vai ser 
+alterada com essa transformação). Chegando numa solução que tem complexidade $O(M*\sqrt M)$. se for 
+só um subset sum, podemos ainda usar um bitset.
+
+Exemplo: You are in a book shop which sells $n$ different books. You know the price $h[i]$, the number 
+of pages $s[i]$ and the number of copies of each book $k[i]$. You have decided that the total price of 
+your purchases will be at most $x$. What is the maximum number of pages you can buy? You can buy 
+several copies of the same book.
+
+\inputwithhash{./solutions/DP/BookShopII.cpp}

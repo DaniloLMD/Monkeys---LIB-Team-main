@@ -1,0 +1,89 @@
+
+    \section{Flow}
+    \subsection{Teoremas de Fluxo}
+    \begin{itemize}
+        \item \textbf{Corte mínimo:}
+        \begin{itemize}
+            \item Valor do fluxo máximo é igual ao valor do corte mínimo.
+        \end{itemize}
+        \item \textbf{Emparelhamento:}
+        \begin{itemize}
+            \item O emparelhamento máximo em um grafo bipartido é igual ao fluxo máximo.
+        \end{itemize}
+        \item \textbf{Teorema Berge (1957):}
+        \begin{itemize}
+            \item Seja $G=(V, E)$ um grafo. Um emparelhamento $M \subseteq E$ é máximo se não há caminhos aumentantes.
+        \end{itemize}
+        \item \textbf{Teorema Hall (1935):}
+        \begin{itemize}
+            \item Seja $G$ um grafo bipartido com bipartição $(X, Y)$. Então $G$ admite um emparelhamento que satura todos os vértices de $X$ se e somente se $|N(S)| \ge |S|$ para todo $S \subseteq X$.
+            \item $|N(x)|$, para algum $x \in V$, é o conjunto vizinhança do vértice $x$, isto é, $|N(x)| = \{y,$ para todo $y$ tal que existe $(x, y)\in E\}$.
+            \item $N(S)=\underset{s\in S}{\cup} N(s)$.
+        \end{itemize}
+        \item \textbf{Teorema Tutte}
+        \begin{itemize}
+            \item $G$ tem um emparelhamento perfeito se e somente se $i(G-S) \le |S|$, para todo $S \subseteq V(G)$.
+            \item Uma componente de um grafo é ímpar/par se possui um número ímpar/par de vértices. Denotaremos por $i(G)$ o número de componentes ímpares de um grafo $G$.
+        \end{itemize}
+        \item \textbf{Teorema Kőnig-Egerváry (Matching máximo e cobertura mínima):}
+        \begin{itemize}
+            \item Seja $G=(V, E)$ um grafo bipartido. Então cobertura($G$) $=$ emparelhamento($G$).
+            \item Let 
+$\displaystyle (S,T)$ be a minimum cut. Let 
+$\displaystyle A=A_{S}\cup A_{T}$ and 
+$\displaystyle B=B_{S}\cup B_{T}$, such that 
+$\displaystyle A_{S},B_{S}\subset S$ and 
+$\displaystyle A_{T},B_{T}\subset T$. Then the minimum cut is composed only of edges going from
+$\displaystyle s$ to 
+$\displaystyle A_{T}$ or from 
+$\displaystyle B_{S}$ to 
+$\displaystyle t$, as any edge from 
+$\displaystyle A_{S}$ to 
+$\displaystyle B_{T}$ would make the size of the cut infinite.
+
+Therefore, the size of the minimum cut is equal to 
+$\displaystyle |A_{T}|+|B_{S}|$. On the other hand, 
+$\displaystyle A_{T}\cup B_{S}$ is a vertex cover, as any edge that is not incident to vertices from 
+$\displaystyle A_{T}$ and
+$\displaystyle B_{S}$ must be incident to a pair of vertices from 
+$\displaystyle A_{S}$ and 
+$\displaystyle B_{T}$, which would contradict the fact that there are no edges between 
+$\displaystyle A_{S}$ and 
+$\displaystyle B_{T}$.
+Thus, 
+$\displaystyle A_{T}\cup B_{S}$ is a minimum vertex cover of 
+$\displaystyle G$.
+\item basically just check if the cut was on a edge related to $S$ or to $T$.
+        \end{itemize}
+        \item \textbf{Teorema Independência (Matching e conjunto independente máximo):}
+        \begin{itemize}
+            \item Seja $G=(V, E)$ um grafo. Então independência($G$) $=$ $n - $ cobertura($G$).
+            \item Se $G = (V,E)$ é bipartido, então pelo \textbf{Teorema Kőnig-Egerváry (1931)} cobertura($G$) $=$ emparelhamento($G$) e temos que em um grafo bipartido o emparelhamento é igual ao fluxo máximo. Assim temos que para grafos bipartidos: independência($G$) $=$ $n - $ fluxo($G$).
+        \end{itemize}
+        \item \textbf{Teorema Menge (1927):}
+        \begin{itemize}
+            \item Seja $D=(V, E)$ um grafo direcionado e $s,t \in V$ dois vértices distintos. Então o número máximo de $st$-caminhos disjuntos nas arestas é igual ao número mínimo de arestas cuja remoção impossibilita a existência de $st$-caminhos.
+            \item Seja $D=(V, E)$ um grafo direcionado e $s,t \in V$ dois vértices distintos. Então o número máximo de $st$-caminhos disjuntos nos vértices é igual ao número mínimo de vértices cuja remoção impossibilita a existência de $st$-caminhos.
+            \item Seja $D=(V, E)$ um grafo direcionado, onde toda aresta tem capacidade $1$, e $s,t \in V$ dois vértices distintos. Seja $f^*$ o fluxo máximo e seja $K^*$ um corte mínimo separador. Então:
+            \begin{itemize}
+                \item val($f^*$) $=$ número máximo de caminho disjuntos nas arestas.
+                \item cal($K^*$) $=$ número mínimo de arestas em $D$ cuja remoção impossibilita a existência de $st$-caminhos.
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+
+    \begin{itemize}
+        \item \textbf{Observações:}
+        \begin{itemize}
+            \item Dá pra usar um monte de gambiarra junto com Fluxo, tipo Dijkstra, Busca Binária, perceber que a vizinhança é igual e juntar elas de algum jeito, entre outras.
+        \end{itemize}
+    \end{itemize}
+    
+    \subsection{Dinic}
+        Melhor algoritmo geral para calcular fluxo, complexidade $\mathcal{O}(V^2E)$.
+        \inputwithhash{./solutions/Graph/dinic.cpp}
+        
+    \subsection{MinCostMaxFlow}
+            The problem is given a Graph with a source and sink vertices, each edge has a capacity $c_i$ and cost $l_i$ per unit of flow, compute the minimum cost to transport a max flow in this network. A super ultra upper bound is $\mathcal{O}(nm + f * m log n)$ where $n$ is the number of vertexs, $m$ the number of edges and $f$ is the maximum flow. But trust it's $\mathcal{O}(enough)$.
+
+            \inputwithhash{./solutions/Graph/mcmf.cpp}

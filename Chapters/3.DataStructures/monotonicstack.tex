@@ -1,0 +1,5 @@
+\section{Monotonic Stack}
+
+You want to make queries of a lot of contiguous subsegments in a sliding window way, you can use Monotonic Stacks. The ideia is to mantain 2 queues, one queue represents a preffix of a subsegment and the other a suffix, the first element of the preffix stores the operation on the preffix and the last element of the suffix stores the operation on the suffix. Insert, remove and query in $\mathcal{O}(1)$.
+
+\inputwithhash{./solutions/DataStructures/MonSt.cpp}

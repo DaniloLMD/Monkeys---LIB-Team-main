@@ -1,0 +1,6 @@
+\section{Open Interval Trick}
+
+You have to separate elements in groups such that each element is in some group. One way to do that is to make $dp(i,k) = $ such that I consider only the first $i$ elements and we have $k$ open groups. And the transitions are to open a new group and move to $dp(i+1,k+1)$, put the $i+1$ element in one of the $k$ open groups and move to $dp(i+1,k)$ or close an opening interval making $i+1$ the last element $dp(i+1,k-1)$.
+
+Example: Your company has $n$ coders, and each of them has a skill level between $0$ and $100$. Your task is to divide the coders into teams that work together. The penalty for creating a team is the skill level difference between the best and the worst coder. In how many ways can you divide the coders into teams such that the sum of the penalties is at most $x$?
+\inputwithhash{./solutions/DP/CodingCompany.cpp}

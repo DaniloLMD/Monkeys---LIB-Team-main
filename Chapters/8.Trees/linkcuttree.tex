@@ -1,0 +1,14 @@
+    
+    
+    \section{Link Cut Tree}
+    A link cut tree is a data structure that uses splay trees to represent a forest of rooted trees and can perform the following operations with an amortized upper bound time complexity of $\mathcal{O}(\log N)$:
+    \begin{itemize}
+        \item Linking a tree with a node by making the root of the tree a child of any node of another tree
+        \item Deleting the edge between a node and its parent, detaching the node's subtree to make a new tree
+        \item Find the root of the tree that a node belongs to
+    \end{itemize}
+
+    These operations all use the $\texttt{access}(v)$ subroutine,
+which creates a preferred path from the root of the represented tree to vertex $v$, making a corresponding auxiliary splay tree with $v$ as the root.
+
+    \inputwithhash{./solutions/Tree/linkcut.cpp}

@@ -1,0 +1,28 @@
+
+    \section{Centroid Decomposition}
+    Uma forma de aplicar divisão e conquista em árvores, escolhemos um centroide da árvore e dividimos a árvore a partir desse centroide e achamos os centroides das outras subárvores. Para problemas de centroide, vamos querer fazer, em geral, duas coisas:
+    \begin{itemize}
+        \item Fazer computações durante a construção do centroide, cada centroide representa um conjunto de caminhos do total de caminhos existentes da árvore. Daí podemos resolver problemas sobre caminhos.
+        \item Fazer a decomposição em centroides da árvore e resolver o problema em cima dessa nova árvore.
+    \end{itemize}
+
+    Existem algumas propriedades importantes sobre a decomposição em centroides:
+    \begin{itemize}
+        \item A árvore vai ter profundidade igual a $\log_2(N)$;
+        \item Para todo par de vértices $u$,$v$, se $L$ é o menor ancestral comum de $u$ e $v$ na decomposição em centroides, então o caminho de $u$ para $v$ na árvore original pode ser visto como o caminho de $u$ para $L$ e de $L$ para $v$, ou seja, $L$ está no caminho simples de $u$ para $v$.
+        \item Qualquer um dos $\frac{n\cdot(n-1)}{2}$ caminhos possíveis na árvore original passa por um centroide.
+    \end{itemize}
+
+    \inputwithhash{./solutions/Tree/centroid.cpp}
+
+    Exemplo 1: Dado uma árvore com $n$ nós, o objetivo é contar o número de caminhos distintos que contém exatamente $k$ arestas.
+
+    \inputwithhash{./solutions/Tree/FixedLengthPathsI.cpp}
+    
+    Exemplo 2: Temos uma árvore com $n$ nós, cada nó pode ter duas cores, azul ou vermelho. Inicialmente o nó $1$ é vermelho e todos os outros são da cor azul, nós vamos fazer dois tipos de queries:
+    \begin{itemize}
+        \item Pintar um nó azul de vermelho;
+        \item Calcular a menor distância para um nó vermelho a partir de um nó $u$.
+    \end{itemize}
+
+    \inputwithhash{./solutions/Tree/xenia&tree.cpp}

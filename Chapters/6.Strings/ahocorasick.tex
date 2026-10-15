@@ -1,0 +1,5 @@
+\section{Aho-Corasick} 
+A powerful structure to walk on a group of strings, the most important feature is that when you are in a state (a prefix of a string), a transition is to input a new character and go to a state that has this new symbol and has the longest common prefix with the previous state. The Aho-Corasick is an automaton, so it's a graph, so you can do crazy things that you would do in graph such as binary lifting.
+
+Example: You are given a string $S$ and a group of $M$ strings $P_i$, you can make at most one operation on $S$. Choose a substring of $S$ and reverse it, after making or not the operation, you count the number of times the strings $P_i$ appear in the $S'$ ($S$ after making or not the operation), you want to maximize this value.
+\inputwithhash{./solutions/String/aho.cpp}

@@ -1,0 +1,8 @@
+\section{Dicas}
+\begin{itemize}
+    \item Mudar a ordem que você calcula a DP pode te otimizar um estado e pode facilitar a implementação;
+    \item Você não precisa sempre calcular a DP numa ordem bonitinha (de $1$ até $N$), você pode ordenar os elementos e fazer a DP nessa nova ordem, pegada divisão e conquista e etc;
+    \item Às vezes, nem todos os estados da DP são úteis (precisam ser visitados) e, às vezes, você só vai ``usar'' um estado um número limitado de vezes.
+    \item Cuidado como você faz as transições. Se você tem uma DP que é do tipo $dp(i) = \sum_{k \in S}dp(k)$, tal que $S$ é um conjunto com valores sem padrão. Ao invés de para cada $dp(i)$ olhar para todos os $k$'s, pode ser melhor para cada  $k$ colocar a contribuição dele em $i$.
+    \item Problema que é do tipo, você tem $N$ items, você pode fazer $M$ operações, na $i$-ésima operação, você perde $A_i$ itens e ganha $B_i$ pontos, qual o máximo de pontos que você pode ganhar? Pra resolver isso você vai usar o melhor item muitas vezes até você chegar numa pontuação $N' \leq LIM$ tal que $LIM$ vai normalmente ser alguma coisa na ordem de vai normalmente ser alguma coisa na ordem de $(\max(A_i))^2$, porque a ideia é que, sabendo do melhor item, você pode usar outros itens para mudar sua pontuação resto $\max(A_i)$ e nó máximo você vai realizar operações com itens piores $\max(A_i)$ vezes (mudar o módulo de 1 em 1).
+\end{itemize}

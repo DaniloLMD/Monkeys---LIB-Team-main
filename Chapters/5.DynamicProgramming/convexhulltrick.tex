@@ -1,0 +1,22 @@
+\section{Convex Hull Trick}
+
+Useful to solve problems where you need to find $\displaystyle (\min_{j\in S} \text{ or }\max_{j \in S})\{m_j \cdot x + c_j\}$, we can imagine it as a set of lines, these lines form a convex hull, and we can efficiently store these lines to make these kind of queries fast. The lines are first sorted by its slope, then we check the point of intersection between adjcents lines, to decide when some lines are useless (useless lines are covered by useful lines). 
+
+Optmize transitions of the kind: $dp(i) = min_{j<i}\{F(j) + b[j] * a[i]\}$, where $F(j)$ is some value computed during the DP. If there is an order between $b[i]$ and $a[i]$, the complexity goes from $\mathcal{O}(n^2)$ to $\mathcal{O}(n)$. If there isn't order restrictions the complexity goes to $\mathcal{O}(n\log(n))$ using Line Container.
+\inputwithhash{./solutions/DP/CHT.cpp}
+
+Example: You have $n$ trees, each tree has an height $a_i$, and you have an chainsaw which you will use to cut completely all trees. Every time you use the chainsaw you decrease the height of one tree by one unit and you have to recharge it to use again. The chainsaw is initally charged and the cost to charge it is given by $b_{id}$ where $id$ is the maximum id of a tree that is completely cut and if no tree is cut completely it's not possible to recharge the chainsaw. It is guaranteed that $a_1 = 1$, $b_n = 0$, $a_1 < a_2 < \dots < a_n$ and $b_1 > b_2 > \dots > b_n$.
+\inputwithhash{./solutions/DP/KalilaandDimnaintheLoggingIndustry.cpp}
+
+\subsection{Ordered slopes and queries, 2 dimensions}
+
+This solutions works under the same conditions for the first CHT, but it's used to solve problems in a 2D dynamic programming, like problem NKLEAVES from spoj. In resume we need to group $N$ leaves in $K$ groups, for each coordinate between 1 and $N$ there is a leaf with weight $w_i$, and the leaves can only be moved to the left, and the cost is $w_i * d$ where $d$ is the distance that leaf $i$ was moved. The problem asks for minimum cost to group the $N$ leaves in $K$ groups. Lets reverse the leaves weights, now the leafs can only be moved to the right. So, the recurrence is:
+
+\bigskip
+
+$dp(i, j) = \min_{k \leq i} \left\{ \left(\sum_{p=k}^{i} (i - p) * w_p \right) + dp(k - 1, j - 1)\right \}$, clearly $O(n^2k)$
+
+\bigskip
+
+So we will keep our lines in such way, that we can solve this problem, see the code below. This solutions only works when the coefficients are all increasing / decreasing, and the queries decreasing / increasing. Improve $O(n^2k)$ to $O(nk)$. (Original Problem: SPOJ - NKLEAVES)
+\inputwithhash{./solutions/DP/ConvexHullTrick2.cpp}

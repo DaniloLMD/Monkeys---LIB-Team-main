@@ -1,0 +1,20 @@
+# PROBLEMAS, ENVIAR E ACOMPANHAR SUBMISSÕES
+moj-comp statement <letra>	    # baixa SÓ um enunciado (HTML e PDF, se houver)
+moj-comp problems               # letras, nomes e time-limits
+moj-comp submit A sol.c         # envia e ESPERA o veredicto ali mesmo (modo offline entra sozinho)
+moj-comp subs                   # todas as suas submissões e veredictos
+
+# PLACAR, DÚVIDAS, AVISOS
+moj-comp score                  # o placar, no terminal
+moj-comp news                   # avisos da organização
+moj-comp clar ls                # suas perguntas e as respostas
+moj-comp ask <letra|geral> <texto>	# dúvidas p/ a organização
+moj-comp clar ask B "A entrada termina com EOF ou com 0?"
+
+# OFFLINE MODE
+moj-comp outbox                # fila offline
+moj-comp sync                  # reenviar já
+moj-comp monitor	             # VIGIA durante a queda
+moj-comp time                  # relógio
+moj-comp doctor                # diagnóstico
+moj-comp update	               # auto-atualização

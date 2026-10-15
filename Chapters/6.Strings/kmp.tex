@@ -1,0 +1,12 @@
+\section{KMP}
+Given a string, builds a vector $\pi$ where $\pi[i]$ is the size of the longest preffix that is equal to a suffix ending in $i$. You can build an automaton from it. The complexity is $\mathcal{O}(N)$ and $\mathcal{O}(N*ALP)$ when you construct the automaton ($ALP$ is the size of the alphabet).
+
+You can use the the KMP to know every preffix that is also a suffix ending in $i$, because $\pi[i]$ gives you the longest preffix, so $\pi[\pi[i]]$ will give you the second longest preffix and so on.
+
+Example 1: You have a string $S$ consisting of small Latin letters and \texttt{?} characters. And you also have a pattern $T$, you want to change every ocurrence of \texttt{?} to a character such that the resulting string $S'$ has as many ocurrences of $T$ as possible.
+
+\inputwithhash{./solutions/String/AnthemofBerland.cpp}
+
+Example 2: You have a vector of integers $A$ where $1 \le A_i \le S$ and a pattern $B$ that is also a vector of integers where $1 \le B_i \le S$. $S$ is a parameter given and $1 \le S \le 25$, you want to know the positions where the pattern $B$ matches $A$, but the matching isn't checking if the values are equal. We say that a vector $C$ and $D$ matches if for every value $d$ of $D$ you can map it to a value $c$ of $C$ such that the every appearance of $d$ in $D$, there is appearence of $c$ in the same position in $C$. Also the mapping must follow the order restrictions, so if $d_1$ maps to $c_1$ and $d_2$ maps to $c_2$ and $d_1 < d_2$, then $c_1 < c_2$ must happen.
+
+\inputwithhash{./solutions/String/CowPatterns.cpp}

@@ -1,0 +1,27 @@
+\section{Exchange Arguments}
+
+\subsection{Dicas}
+\begin{itemize}
+    \item Talvez a função piso não faça diferença no Exchange Arguments (faz as contas pra ver).
+\end{itemize}
+
+You use the exchange arguments to proof that there is an ideal order of the elements. It's easy to see 
+by an example problem.
+
+Example: There are $N$ blocks, numbered $1,2,\dots, N$. For each $i$ ($1 \le i \le N$), 
+block $i$ has a weight of $w_i$, a solidness of $s_i$ and a value of $v_i$. Taro has decided to build 
+a tower by choosing some of the $N$ blocks and stacking them vertically in some order. Here, the tower 
+must satisfy the following condition: for each block $i$ in the tower, the sum of the weights of the 
+blocks stacked above it's not greater than $s_i$. Find the maximum possible sum of the values of the 
+block contained in the tower.
+
+Think about how you would order the blocks if there were only 2 of them, let's say the first has $w_1$ 
+and $s_1$ and the second has $w_2$ and $s_2$. Let's consider both orderings and see what is the best 
+one:
+\begin{itemize}
+    \item If you put the first on the bottom, the strength of the tower will be $s_1-w_2$.
+    \item If you put the second on the bottom, the strength of the tower will be $s_2-w_1$.
+\end{itemize}
+
+So we want to take the first as the bottom one if $s1-w2 > s2-w1$. Which is equal to saying $s1+w1 > s2+w2$. Then, we want to put the ones with greater $s+w$ on the bottom. We have an ideal ordering of the elements, we make a dp using this order.
+\inputwithhash{./solutions/DP/Tower.cpp}

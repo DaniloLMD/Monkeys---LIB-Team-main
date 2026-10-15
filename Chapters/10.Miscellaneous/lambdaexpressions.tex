@@ -1,0 +1,23 @@
+\section{Lambda Expressions}
+Basic Lambda Syntax
+    A lambda expression consists of the following:
+\begin{center}
+    [capture list] (parameter list) {function body}
+\end{center}
+The capture list and parameter list can be empty, so the following is a valid lambda:
+\begin{lstlisting}
+[](){cout << "Hello, world!" << endl;}
+auto func1 = [](int i) {cout << ":" << i << ":";};
+func1(x);
+\end{lstlisting}
+Using \& in capture list it will have access to the scope.
+
+Recursive lambda using function:
+\begin{lstlisting}
+int main() {
+	function<int(int, int)> gcd = [&](int a, int b) {
+		return b == 0 ? a : gcd(b, a % b);
+	};
+	cout << gcd(20, 30) << '\n';  // outputs 10
+}
+\end{lstlisting}
